@@ -1,0 +1,204 @@
+.nb-theme-default {
+
+  .bg-theme-primary {
+    background: $theme-light-primary !important;
+  }
+
+  .bg-theme-secondary {
+    background: $theme-light-secondary !important;
+  }
+
+  .border-theme-primary {
+    border-color: $theme-light-thirdly !important;
+  }
+
+  .nb-input-basic {
+    background-color: $theme-light-input !important;
+    border-color: $theme-light-thirdly !important;
+    color: $theme-dark-primary !important;
+  }
+
+  ngx-intl-tel-input {
+
+    input {
+      background-color: #f7f9fc;
+      border-color: #e4e9f2;
+      color: #222b45;
+
+      &:hover {
+        background-color: #edf1f7;
+        border-color: #e4e9f2;
+        box-shadow: none;
+      }
+    }
+  }
+
+  .nb-table {
+
+    th, td {
+      border-color: $theme-light-secondary !important;
+    }
+  }
+
+  .mat-menu-panel {
+    background: $theme-light-primary;
+
+    .mat-menu-item {
+      background: $theme-light-primary;
+
+      &:hover {
+        background: $theme-light-secondary;
+      }
+    }
+  }
+
+  nb-alert {
+
+    &.status-warning.outline-warning {
+      color: $warning-dark !important;
+      background-color: $warning-light !important;
+    }
+  }
+}
+
+.nb-theme-dark {
+
+  .bg-theme-primary {
+    background: $theme-dark-primary !important;
+  }
+
+  .bg-theme-secondary {
+    background: $theme-dark-secondary !important;
+  }
+
+  .border-theme-primary {
+    border-color: $theme-dark-thirdly !important;
+  }
+
+  .nb-input-basic {
+    background-color: $theme-dark-input !important;
+    border-color: $theme-dark-thirdly !important;
+    color: $theme-light-primary !important;
+  }
+
+  .ag-grid {
+    color: white !important;
+
+    .ag-root-wrapper, .ag-header, .ag-menu, .ag-standard-button, .ag-row.ag-row-odd, .ag-tool-panel-wrapper,
+    .ag-column-drop-horizontal, .ag-filter-toolpanel-instance-filter, .ag-theme-alpine, .ag-popup,
+    .ag-list, .ag-select-list {
+      background: $theme-dark-primary !important;
+    }
+
+    .ag-menu-header, .ag-row, .ag-toggle-button-input-wrapper::before, .ag-checkbox-input-wrapper,
+    .ag-group-title-bar {
+      background: $theme-dark-secondary !important;
+    }
+
+    input,
+    .ag-select .ag-picker-field-wrapper {
+      background: $theme-dark-secondary !important;
+      border-color: $theme-dark-thirdly !important;
+    }
+
+    .ag-filter-toolpanel-header, .ag-filter-toolpanel-search, .ag-status-bar, .ag-header-row, .ag-panel-title-bar-title,
+    .ag-multi-filter-group-title-bar, .ag-row, .ag-paging-panel, .ag-side-buttons, .ag-icon,
+    .ag-column-drop-empty-message, .ag-column-drop-vertical-empty-message, .ag-theme-alpine {
+      color: white !important;
+    }
+  }
+
+  ngx-intl-tel-input {
+
+    .iti--allow-dropdown input,
+    .iti--separate-dial-code input {
+      background-color: $theme-dark-secondary;
+      border-color: $theme-dark-thirdly;
+      color: white;
+    }
+
+    .country-dropdown {
+      border-color: $theme-dark-thirdly;
+      background-color: $theme-dark-secondary;
+    }
+
+    .iti__country-list {
+      background-color: $theme-dark-secondary;
+    }
+
+    .iti__arrow {
+      border-top: 4px solid $theme-dark-title;
+    }
+  }
+
+  .form-control:focus {
+    background-color: $theme-dark-secondary;
+    border-color: $theme-dark-thirdly;
+    color: white;
+  }
+
+  .highcharts-container {
+
+    .highcharts-background {
+      fill: $theme-dark-primary !important;
+    }
+
+    .highcharts-legend-item text, .highcharts-axis-labels text {
+      fill: $theme-dark-title !important;
+    }
+
+    .highcharts-axis-line[stroke], .highcharts-grid-line[stroke], .highcharts-tick[stroke] {
+      stroke: $theme-dark-secondary !important;
+    }
+  }
+
+  .nb-table {
+    color: white;
+
+    th, td {
+      border-color: $theme-dark-secondary !important;
+    }
+  }
+
+  app-paginator {
+
+    .paginate-button {
+      color: white !important;
+
+      &:disabled {
+        color: $theme-dark-title !important;
+      }
+
+      &:not(.active) {
+        background: $theme-dark-secondary !important;
+        border: 1px solid $theme-dark-secondary !important;
+      }
+    }
+  }
+
+  .mat-menu-panel {
+    background: $theme-dark-secondary;
+
+    .mat-menu-item {
+      background: $theme-dark-secondary;
+      color: white;
+
+      &:hover {
+        background: $theme-dark-primary;
+      }
+    }
+  }
+
+  .text-secondary {
+    color: $theme-dark-title !important;
+  }
+
+  nb-alert {
+
+    &.status-warning.outline-warning {
+      color: $warning-light !important;
+      background-color: $warning-dark !important;
+      border-color: $warning !important;
+    }
+  }
+}

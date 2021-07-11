@@ -1,0 +1,78 @@
+<div class="gcs-page">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <div class="nb-input with-prefix">
+      <nb-select status="primary" [filled]="true" [(selected)]="duration" size="small" [style.min-width.px]="120">
+        <nb-option *ngFor="let option of durations" [value]="option.value">{{option.title}}</nb-option>
+      </nb-select>
+      <i class="prefix fa fa-calendar text-white"></i>
+    </div>
+  </div>
+
+  <div class="charts row align-items-stretch">
+    <div *ngFor="let chart of charts" class="mb-2" [ngClass]="chart.class">
+      <app-chart-card [title]="chart.title" [icon]="chart.icon" [chart]="chart.chart"></app-chart-card>
+    </div>
+  </div>
+
+  <nb-card class="mb-0">
+    <nb-card-header class="d-flex align-items-center justify-content-between">
+      User Activities
+      <app-search-input [(value)]="search" (valueChange)="loadTableData()"></app-search-input>
+    </nb-card-header>
+
+    <nb-card-body>
+      <div class="nb-table table-sm bg-theme-primary nowrap">
+        <table mat-table [dataSource]="dataSource" matSort class="w-100" (matSortChange)="onSortChange($event)">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <td mat-cell *matCellDef="let item">{{item.id}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="user">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>User</th>
+            <td mat-cell *matCellDef="let item">
+              <app-user-cell [user]="item.user"></app-user-cell>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="platform">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Platform</th>
+            <td mat-cell *matCellDef="let item">{{item.platform}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="ip_address">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Ip address</th>
+            <td mat-cell *matCellDef="let item">{{item.ip_address}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="country">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
+            <td mat-cell *matCellDef="let item">{{item.country}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="city">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>City</th>
+            <td mat-cell *matCellDef="let item">{{item.city}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="started">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Started</th>
+            <td mat-cell *matCellDef="let item">{{item.started}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="duration">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Duration</th>
+            <td mat-cell *matCellDef="let item">{{item.duration}}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <app-paginator [(page)]="page" [pageSize]="10" [length]="totalCount" (pageChange)="loadTableData()"></app-paginator>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</div>
+

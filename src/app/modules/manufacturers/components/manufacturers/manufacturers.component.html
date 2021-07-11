@@ -1,0 +1,109 @@
+<div class="Manufacturers-page h-100">
+  <div class="page-header d-flex align-items-center justify-content-between mb-3">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <button nbButton status="primary" size="small" (click)="onOpenManageManufacturerModal(null, manageDialog)">Manage manufacturer</button>
+  </div>
+
+  <div class="nb-table bg-theme-primary table-sm nowrap shadow">
+    <table mat-table [dataSource]="dataSource" matSort class="w-100" (matSortChange)="onSortChange($event)">
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let item">
+          <div class="d-flex align-items-center cursor-pointer" [routerLink]="['/manufacturers', item.id]">
+            <img *ngIf="item.photo" class="rounded-circle events-none" [src]="item.photo" [width]="25" alt="">
+            <i *ngIf="!item.photo" class="fa fa-user-circle text-2xl"></i>
+            &nbsp;&nbsp;<span class="text-primary">{{item.name}}</span>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+        <td mat-cell *matCellDef="let item">{{item.email}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="limit">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Limit</th>
+        <td mat-cell *matCellDef="let item">{{item.limit}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="value">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Value</th>
+        <td mat-cell *matCellDef="let item">{{item.value}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let item">
+          <button nbButton status="primary" size="small" class="mr-2" (click)="onOpenSetLimitModal(item, setLimitDialog)">Set limit</button>
+          <button nbButton status="danger" size="small" (click)="onOpenManageManufacturerModal(item, manageDialog)">Unset as manufacturer</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <app-paginator [(page)]="page" [pageSize]="10" [length]="totalCount" (pageChange)="loadTableData()"></app-paginator>
+  </div>
+</div>
+
+<ng-template #setLimitDialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>Limit manufacturer</nb-card-header>
+    <nb-card-body>
+      <div class="form-inline">
+        <label class="label col-sm-3">Email:</label>
+        <div class="col-sm-9">
+          <input fullWidth nbInput [value]="editingManufacturer.email"
+                 status="basic" shape="rectangle" [readOnly]="true">
+        </div>
+      </div>
+
+      <div class="form-inline">
+        <label class="label col-sm-3">Limit:</label>
+        <div class="col-sm-9">
+          <input fullWidth nbInput type="number" [(ngModel)]="editingManufacturer.limit"
+                 [status]="!editingManufacturer.limit || editingManufacturer.limit < 0 ? 'danger' : 'basic'" shape="rectangle">
+          <div *ngIf="!editingManufacturer.limit || editingManufacturer.limit < 0" class="invalid-feedback d-block">
+            <div *ngIf="!editingManufacturer.limit">Limit is required</div>
+            <div *ngIf="editingManufacturer.limit < 0">Limit is invalid</div>
+          </div>
+        </div>
+      </div>
+    </nb-card-body>
+    <nb-card-footer class="d-flex justify-content-between">
+      <button nbButton size="small" (click)="ref.close(false)">Close</button>
+      <button nbButton size="small" status="primary" (click)="onSetLimit(ref)">Set limit</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #manageDialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>Manage manufacturer</nb-card-header>
+    <nb-card-body>
+      <div class="form-inline">
+        <label class="label col-sm-3">Email:</label>
+        <div class="col-sm-9">
+          <input fullWidth nbInput [(ngModel)]="searchEmail"
+                 status="basic" shape="rectangle" (ngModelChange)="onSearchManufacturer()">
+        </div>
+      </div>
+
+      <div *ngIf="searchedUser" class="text-center text-xs">
+        <div *ngIf="searchedUser.is_manufacturer">Already is manufacturer, you can make unset as manufacturer</div>
+        <div *ngIf="!searchedUser.is_manufacturer">Already is user, you can make user as manufacturer</div>
+      </div>
+    </nb-card-body>
+    <nb-card-footer class="d-flex justify-content-between">
+      <button nbButton size="small" (click)="ref.close(false)">Close</button>
+      <ng-container *ngIf="searchedUser" class="text-center text-xs">
+        <button nbButton size="small" status="primary" (click)="onToggleManufacturer(ref)">
+          {{searchedUser.is_manufacturer ? 'Unset as manufacturer' : 'Set as manufacturer'}}
+        </button>
+      </ng-container>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

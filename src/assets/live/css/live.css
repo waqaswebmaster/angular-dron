@@ -1,0 +1,509 @@
+.map-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.map-container .alert.alert-warning {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    left: 0;
+    color: #fff;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 0;
+    width: 620px;
+    margin: 0 auto;
+}
+
+.select-mission {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 40px;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    border-bottom-left-radius: 8px;
+    border-top-left-radius: 8px;
+    width: 40px;
+    height: 40px;
+    right: 0;
+    cursor: pointer;
+    transition: background-color;
+}
+
+.select-mission:hover {
+    background-color: rgba(40, 40, 40, 0.75);
+}
+
+main.mb-5 {
+    height: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+main.mb-5 #content-wrapper {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+main.mb-5 #content-wrapper .container-fluid {
+    height: 100%;
+    padding: 0;
+}
+
+.drones {
+    top: 0px;
+    right: 50px;
+    width: 460px;
+    position: absolute;
+    display: table-column;
+}
+
+.drone-block {
+    opacity: 0.6;
+    margin-top: 10px;
+    width: 100%;
+    height: 220px;
+    background-color: #000000CC;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.drone-block.active {
+    opacity: 1;
+}
+
+.waiting-video-overlay {
+    color: #FFF;
+    text-align: center;
+    top: 90px;
+    position: relative;
+    opacity: 0.7;
+}
+
+.waiting-video-overlay img {
+    width: 50px;
+}
+
+.drone-name-header {
+    background: #343a40;
+    width: 100%;
+    height: 38px;
+    top: 0px;
+    position: absolute;
+    color: #FFF;
+    align-items: center;
+}
+
+.drone-name-header .btn-primary:hover {
+    transition: filter 0.15s ease-in-out;
+    filter: brightness(80%);
+}
+
+.drone-name-group {
+    width: 100%;
+}
+
+.drone-video-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 38px;
+    z-index: 0;
+    border: 1px #343a40 solid;
+}
+
+.drone-control-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 10;
+    top: 0;
+}
+
+.drone-control-buttons {
+    z-index: 30;
+    width: 100%;
+    height: 50%;
+}
+
+.drone-control-toolbar {
+    width: 100%;
+    height: 25px;
+    background: #343a406e;
+    z-index: 20;
+    color: white;
+    font-size: 0.9em;
+    overflow: hidden;
+}
+
+.drone-control-toolbar-left,
+.drone-control-toolbar-right {
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    color: white;
+}
+
+.drone-control-toolbar-right {
+    display: none;
+    right: 0;
+}
+
+.drone-control-toolbar-left .rounded,
+.drone-control-toolbar-right .rounded {
+    background-color: #343a40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100% !important;
+    cursor: pointer;
+}
+
+.drone-control-toolbar-left .rounded:hover,
+.drone-control-toolbar-right .rounded:hover {
+    opacity: 0.7;
+}
+
+.drone-control-toolbar-left .rounded.big,
+.drone-control-toolbar-right .rounded.big {
+    width: 40px;
+    height: 40px;
+}
+
+.drone-control-toolbar-left .rounded.small,
+.drone-control-toolbar-right .rounded.small {
+    width: 24px;
+    height: 26px;
+    border-radius: 100%;
+}
+
+.drone-control-toolbar-left .bottom {
+    display: none;
+    position: absolute;
+    bottom: 30px;
+    font-size: 24px;
+    left: 6px;
+}
+
+.drone-control-toolbar-left .middle {
+    position: absolute;
+    margin: auto;
+    top: 30px;
+    bottom: 50px;
+    display: flex;
+    align-items: center;
+    left: 12px;
+}
+
+.drone-control-toolbar-left .command-next-point {
+    margin-left: 4px;
+}
+
+.drone-control-toolbar-left .command-home {
+    font-size: 24px;
+}
+
+.drone-control-toolbar-right .middle {
+    position: absolute;
+    margin: auto;
+    top: 36px;
+    bottom: 50px;
+    display: flex;
+    align-items: center;
+    right: 12px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.drone-control-toolbar-right .command-image-capture {
+    font-size: 14px;
+}
+
+.drone-control-toolbar-right .command-video-start,
+.drone-control-toolbar-right .command-video-stop {
+    font-size: 20px;
+    margin-top: 4px;
+}
+
+.drone-control-toolbar-right .camera-state {
+    font-size: 10px;
+}
+
+.drone-control-toolbar-bottom {
+    position: absolute;
+    display: block;
+    right: 8px;
+    bottom: 15px;
+    color: white;
+}
+
+.drone-control-toolbar-bottom .command-set-bitrate {
+    background: #343a406e;
+    border: 1px white solid;
+    border-radius: 3px;
+    font-size: 10px;
+    padding: 0 5px 0 5px;
+    margin-right: 0px;
+    cursor: pointer;
+    color: grey;
+}
+
+.drone-control-toolbar-bottom .active {
+    color: white;
+    background: #007bff;
+}
+
+
+.drone-control-state {
+    position: absolute;
+    top: 25px;
+    left: 0;
+    right: 0;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 10px;
+    text-align: center;
+}
+
+.drone-control-pfd {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background: #343a406e;
+    z-index: 20;
+    color: white;
+    font-size: 0.9em;
+    overflow: hidden;
+    align-items: center;
+}
+
+
+#selectMissionModal .modal-content {
+    background-color: rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+}
+
+#selectMissionModal .modal-dialog {
+    margin-top: 14vh;
+}
+
+#selectMissionModal .close {
+    color: white;
+}
+
+#selectMissionModal .modal-title {
+    color: white;
+}
+
+#selectMissionModal .modal-header {
+    border-bottom-color: grey;
+}
+
+#selectMissionModal .modal-body {
+    max-height: 61vh;
+    overflow: auto;
+}
+
+.mission-preview {
+    margin-right: 15px;
+    position: relative;
+    width: 240px;
+    height: 240px;
+    cursor: pointer;
+}
+
+.mission-preview:nth-child(3n) {
+    margin-right: 0;
+}
+
+.mission-preview:hover .mission-preview__thumbnail-overlay {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.mission-preview__thumbnail {
+    width: 100%;
+    height: 100%;
+}
+
+.mission-preview__thumbnail[img] {
+    display: block;
+}
+
+.mission-preview__thumbnail-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: transparent;
+    transition: background-color 0.2s;
+}
+
+.mission-preview__description {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    min-height: 60px;
+    color: white;
+    padding: 6px 6px 20px 6px;
+}
+
+.mission-preview__description__name {
+    font-size: 13px;
+    line-height: 15px;
+    display: block;
+}
+
+.mission-preview__description__date {
+    position: absolute;
+    bottom: 4px;
+    right: 6px;
+    font-size: 10px;
+}
+
+
+.carousel, .carousel-inner {
+    width: 100%;
+    height: 100%;
+}
+
+.carousel, .carousel-inner .carousel-item {
+    height: 100%;
+}
+
+.carousel, .carousel-inner .carousel-item .video-element {
+    height: 100%;
+}
+
+.carousel-indicators {
+    z-index: 600 !important;
+
+}
+
+.carousel-camera-indicators li {
+    margin-bottom: 2px;
+    height: 20px;
+    z-index: 600;
+}
+
+.video-content {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    /* border: 1px red solid; */
+    left: 0px;
+    top: 0px;
+    text-align: center;
+    z-index: 10;
+}
+
+.drone-video-console {
+    display: none;
+    position: absolute;
+    width: 300px;
+    height: 100px;
+    right: 10px;
+    bottom: 35px;
+    color: #FFF;
+    text-align: right;
+    font-size: 0.6em;
+}
+
+.pfd-canvas {
+    border-radius: 20px;
+    position: absolute;
+    bottom: 0px;
+    z-index: 100;
+}
+
+footer {
+    display: none;
+}
+
+.cesium-viewer .cesium-viewer-bottom .cesium-widget-credits {
+    display: none;
+}
+
+.cesium-viewer .cesium-viewer-toolbar {
+    left: 60px;
+    right: auto;
+}
+
+.fov-visibility {
+    color: white;
+    position: absolute;
+    top: 45px;
+    left: 9px;
+    right: auto;
+    background-color: rgba(40, 40, 40, .7);
+    border: solid 1px #444;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.share-access {
+    color: white;
+    position: absolute;
+    top: 80px;
+    left: 9px;
+    right: auto;
+    background-color: rgba(40, 40, 40, .7);
+    border: solid 1px #444;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#public-access-modal .select2.select2-container {
+    width: 100% !important;
+}
+
+.public-page-title {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    text-align: center;
+}
+
+.disconnected {
+    background: orange !important;
+    border: 1px orange solid;
+}
+
+.connection-lost {
+    background-color: #343a406e;;
+    animation-name: connection-lost-animation;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes connection-lost-animation {
+    0% {
+        background-color: #343a406e;
+    }
+    50% {
+        background-color: #ff0000b4;
+    }
+    100% {
+        background-color: #343a406e;
+    }
+}
+
+.cesium-baseLayerPicker-dropDown-visible {
+    left: 50px;
+}

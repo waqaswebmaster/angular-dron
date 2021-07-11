@@ -1,0 +1,56 @@
+<div class="Integrations-page h-100">
+  <div class="page-header d-flex align-items-center justify-content-between mb-3">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+  </div>
+
+  <nb-card>
+    <nb-card-body>
+      <h3>DroneLogbook.com</h3>
+      <p>Import flight logs to auto fill flight data, view GPS trace and play back in 3D.</p>
+      <div class="text-right">
+        <button nbButton size="small" status="success" (click)="onOpenConnectModal(dialog)">Connect</button>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</div>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>DroneLogbook.com integration</nb-card-header>
+    <nb-card-body [formGroup]="connectForm">
+      <div class="form-group">
+        <label class="label">Email</label>
+        <input fullWidth nbInput formControlName="email"
+               [status]="isFieldInvalid(f.email) ? 'danger' : 'basic'" shape="rectangle">
+        <div *ngIf="isFieldInvalid(f.email)" class="invalid-feedback d-block">
+          <div *ngIf="f.email.errors.required">Email is required</div>
+          <div *ngIf="f.email.errors.pattern">Email is invalid</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="label">Password</label>
+        <input fullWidth nbInput formControlName="password" type="password"
+               [status]="isFieldInvalid(f.password) ? 'danger' : 'basic'" shape="rectangle">
+        <p class="input-hint text-secondary">The password is transmitted encrypted</p>
+        <div *ngIf="isFieldInvalid(f.password)" class="invalid-feedback d-block">
+          <div *ngIf="f.password.errors.required">Password is required</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="label">Custom server url</label>
+        <input fullWidth nbInput formControlName="url"
+               [status]="isFieldInvalid(f.url) ? 'danger' : 'basic'" shape="rectangle">
+        <p class="input-hint text-secondary">Optional, custom server url. E.g https://app.dronelogbook.com/</p>
+        <div *ngIf="isFieldInvalid(f.url)" class="invalid-feedback d-block">
+          <div *ngIf="f.url.errors.pattern">Url is invalid</div>
+        </div>
+      </div>
+    </nb-card-body>
+    <nb-card-footer class="d-flex justify-content-between">
+      <button nbButton size="small" (click)="ref.close(false)">Close</button>
+      <button nbButton size="small" status="primary" (click)="onConnect(ref)">Submit</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

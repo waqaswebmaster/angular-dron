@@ -1,0 +1,6 @@
+<div class="search-box form-inline" [ngClass]="class">
+  <div class="nb-input with-prefix">
+    <input nbInput status="basic" shape="rectangle" placeholder="Search" [(ngModel)]="value" (keypress)="onKeyPress($event)">
+    <i class="prefix fa fa-search text-primary"></i>
+  </div>
+</div>

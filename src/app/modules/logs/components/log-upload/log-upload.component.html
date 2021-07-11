@@ -1,0 +1,92 @@
+<div class="log-upload-page">
+  <div class="page-header mb-3">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+  </div>
+
+  <nb-card>
+    <nb-card-body>
+      <ngx-dropzone class="nb-input-basic" accept=".ulg" [multiple]="false"
+                    (change)="onUploadFile($event)">
+        <ngx-dropzone-label *ngIf="!file" class="text-secondary">
+          <i class="fa fa-file-signature fa-3x mb-3"></i>
+          <p class="text-secondary mb-0">Click or drag your .ulg file here</p>
+        </ngx-dropzone-label>
+        <ng-container *ngIf="file">
+          <ngx-dropzone-preview [file]="file" [removable]="true" (removed)="file = null">
+            <ngx-dropzone-label>
+              <i class="fa fa-file-signature fa-3x mb-3"></i>
+              <div class="text-secondary">{{file.name}}</div>
+            </ngx-dropzone-label>
+          </ngx-dropzone-preview>
+        </ng-container>
+      </ngx-dropzone>
+
+      <form class="row mt-3 align-items-stretch" [formGroup]="form">
+        <div class="col-lg-4">
+          <div class="row">
+            <div class="form-group col-lg-12 col-md-6">
+              <label class="label">Flight type</label>
+              <nb-select formControlName="flight_type" fullWidth [status]="isFieldInvalid(f.flight_type) ? 'danger' : 'basic'">
+                <nb-option *ngFor="let option of flightTypes" [value]="option.id">{{option.name}}</nb-option>
+              </nb-select>
+              <div *ngIf="isFieldInvalid(f.flight_type)" class="invalid-feedback d-block pl-1">
+                <div *ngIf="f.flight_type.errors.required">Flight type is required</div>
+              </div>
+            </div>
+
+            <div class="form-group col-lg-12 col-md-6">
+              <label class="label">Operation type</label>
+              <nb-select formControlName="operation_type" fullWidth [status]="isFieldInvalid(f.operation_type) ? 'danger' : 'basic'">
+                <nb-option *ngFor="let option of operationTypes" [value]="option.id">{{option.name}}</nb-option>
+              </nb-select>
+              <div *ngIf="isFieldInvalid(f.operation_type)" class="invalid-feedback d-block pl-1">
+                <div *ngIf="f.operation_type.errors.required">Operation type is required</div>
+              </div>
+            </div>
+
+            <div class="form-group col-lg-12 col-md-6">
+              <label class="label">Rating</label>
+              <nb-select formControlName="rating" fullWidth [status]="isFieldInvalid(f.rating) ? 'danger' : 'basic'">
+                <nb-option *ngFor="let option of ratings" [value]="option.id">{{option.name}}</nb-option>
+              </nb-select>
+              <div *ngIf="isFieldInvalid(f.rating)" class="invalid-feedback d-block pl-1">
+                <div *ngIf="f.rating.errors.required">Rating is required</div>
+              </div>
+            </div>
+
+            <div class="form-group col-lg-12 col-md-6">
+              <label class="label">Wind speed</label>
+              <nb-select formControlName="wind_speed" fullWidth [status]="isFieldInvalid(f.wind_speed) ? 'danger' : 'basic'">
+                <nb-option *ngFor="let option of windSpeeds" [value]="option.id">{{option.name}}</nb-option>
+              </nb-select>
+              <div *ngIf="isFieldInvalid(f.wind_speed)" class="invalid-feedback d-block pl-1">
+                <div *ngIf="f.wind_speed.errors.required">Wind speed is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-lg-4 col-md-6 d-flex flex-column">
+          <label class="label">Description</label>
+          <textarea fullWidth nbInput formControlName="description" placeholder="Enter description (optional)"
+                    [status]="isFieldInvalid(f.description) ? 'danger' : 'basic'" shape="rectangle"
+                    class="flex-grow-1" [rows]="4">
+          </textarea>
+        </div>
+
+        <div class="form-group col-lg-4 col-md-6 d-flex flex-column">
+          <label class="label">Special notes</label>
+          <textarea fullWidth nbInput formControlName="special_notes" placeholder="Enter notes (optional)"
+                    [status]="isFieldInvalid(f.special_notes) ? 'danger' : 'basic'" shape="rectangle"
+                    class="flex-grow-1" [rows]="4">
+          </textarea>
+        </div>
+
+        <div class="col-12">
+          <button nbButton fullWidth shape="rectangle" status="primary" size="small" (click)="onSave()">Save</button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
+</div>
+

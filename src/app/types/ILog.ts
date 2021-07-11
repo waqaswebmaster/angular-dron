@@ -1,0 +1,53 @@
+import {IUser} from "@app/types";
+
+export interface ILog {
+  uuid: string;
+  datetime_of_start?: string;
+  filename: string;
+  parsing: number;
+  duration?: number;
+  drone?: {
+    uuid_ap: string;
+    name: string;
+    type: string;
+  };
+  pilot: IUser;
+  users: IUser[];
+  hardware_name?: string;
+  hardware_version?: string;
+  software_version?: string;
+  rating?: number;
+  operation_type?: number;
+  flight_type?: number;
+  wind_speed?: number;
+  location_lat?: number;
+  location_lon?: number;
+  travelled_distance?: number;
+  ground_altitude?: number;
+  max_agl_altitude?: number;
+  max_distance_from_home?: number;
+  max_speed?: number;
+  average_speed?: number;
+  average_speed_fw?: number;
+  average_speed_mc?: number;
+  battery_voltage_begin?: number;
+  battery_voltage_end?: number;
+  battery_max_current?: number;
+  battery_average_current?: number;
+  uploaded_at: string;
+  description?: string;
+  special_notes?: string;
+  format?: string;
+  sys_uuid?: string;
+  estimator?: string;
+  os_version?: string;
+  max_alt_diff?: number;
+  max_speed_down?: number;
+  max_speed_h?: number;
+  max_speed_up?: number;
+  dropouts?: string;
+  updated_at: string;
+  dronelogbook_state?: string;
+  dronelogbook_url?: string;
+  dronelogbook_description?: string;
+}

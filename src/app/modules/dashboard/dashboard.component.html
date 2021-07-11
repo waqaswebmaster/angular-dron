@@ -1,0 +1,55 @@
+<div class="dashboard-page">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <p class="m-0">Welcome to Sky-Drones Cloud, {{user?.full_name}}!</p>
+
+    <div class="nb-input with-prefix">
+      <nb-select status="primary" [filled]="true" [(selected)]="duration" size="small" [style.min-width.px]="120">
+        <nb-option *ngFor="let option of durations" [value]="option.value">{{option.title}}</nb-option>
+      </nb-select>
+      <i class="prefix fa fa-calendar text-white"></i>
+    </div>
+  </div>
+
+  <div class="statistics row align-items-stretch mb-3">
+    <div *ngFor="let item of statistics" class="col-4 col-md-2 mb-2">
+      <nb-card class="h-100 text-center p-3 mb-0">
+        <div class="text-2xl font-weight-bold mb-2">{{item.value}}</div>
+        <div class="text-primary cursor-pointer" [routerLink]="item.link">{{item.title}}</div>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="charts row align-items-stretch">
+    <div *ngFor="let chart of charts" class="mb-2" [ngClass]="chart.class">
+      <app-chart-card [title]="chart.title" [icon]="chart.icon" [chart]="chart.chart"></app-chart-card>
+    </div>
+  </div>
+
+  <nb-card class="mb-0">
+    <nb-card-header>
+      Latest Flights
+    </nb-card-header>
+
+    <nb-card-body>
+      <table class="table nb-table table-sm border-top-0">
+        <thead>
+        <tr>
+          <th>Date</th>
+          <th>Drone</th>
+          <th>Pilot</th>
+          <th>Duration</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let flight of latestFlights">
+          <td>{{flight.date | date: 'MMM d, y, h:mm a'}}</td>
+          <td>{{flight.drone}}</td>
+          <td>{{flight.pilot}}</td>
+          <td>{{flight.duration}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </nb-card-body>
+  </nb-card>
+</div>
+

@@ -1,0 +1,135 @@
+<div class="organisation-profile-tab py-2">
+  <h3 *ngIf="organisation">{{organisation.name}}</h3>
+
+  <form class="form-horizontal mt-3" [formGroup]="form">
+    <div class="form-group row align-items-center">
+      <label class="label col-sm-3 mb-0">Name</label>
+      <input class="col-sm-9" fullWidth nbInput formControlName="name" placeholder="Name"
+             [status]="isFieldInvalid(f.name) ? 'danger' : 'basic'" shape="rectangle">
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.name)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.name.errors.required">Name is required</div>
+      </div>
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="label col-sm-3 mb-0">Email</label>
+      <input class="col-sm-9" fullWidth nbInput formControlName="email" placeholder="Email"
+             [status]="isFieldInvalid(f.email) ? 'danger' : 'basic'" shape="rectangle">
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.email)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.email.errors.required">Email is required</div>
+        <div *ngIf="f.email.errors.pattern">Email is invalid</div>
+      </div>
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="label col-sm-3 mb-0">Phone</label>
+      <ngx-intl-tel-input class="col-sm-9 p-0" formControlName="phone" [class.is-invalid]="isFieldInvalid(f.phone)"
+                          [preferredCountries]="preferredCountries" [phoneValidation]="true"></ngx-intl-tel-input>
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.phone)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.phone.errors.required">Phone is required</div>
+        <div *ngIf="f.phone.errors.validatePhoneNumber">Phone is invalid</div>
+      </div>
+    </div>
+
+    <div class="form-group row align-items-center" *ngIf="!organisation">
+      <label class="label col-sm-3 mb-0">Photo</label>
+      <div class="col-sm-9 p-0">
+        <ngx-dropzone class="nb-input-basic" accept="image/*" [multiple]="false"
+                      (change)="onUploadPhoto($event)">
+          <ngx-dropzone-label *ngIf="!photo" class="text-secondary">
+            <i class="far fa-file-image fa-3x mb-3"></i>
+            <p class="text-secondary">Click or drag image to this area to upload</p>
+          </ngx-dropzone-label>
+          <ng-container *ngFor="let img of [photo]">
+            <ngx-dropzone-image-preview *ngIf="img" [file]="img" [removable]="true" class="m-auto"
+                                        (removed)="photo = null"></ngx-dropzone-image-preview>
+          </ng-container>
+        </ngx-dropzone>
+      </div>
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="label col-sm-3 mb-0">Web site</label>
+      <input class="col-sm-9" fullWidth nbInput formControlName="website" placeholder="Web site"
+             [status]="isFieldInvalid(f.website) ? 'danger' : 'basic'" shape="rectangle">
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.website)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.website.errors.required">Web site is required</div>
+        <div *ngIf="f.website.errors.pattern">Web site is invalid</div>
+      </div>
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="label col-sm-3 mb-0">Size</label>
+      <nb-select formControlName="size" class="col-sm-9 p-0" fullWidth [status]="isFieldInvalid(f.size) ? 'danger' : 'basic'">
+        <nb-option *ngFor="let option of sizes" [value]="option.id">{{option.text}}</nb-option>
+      </nb-select>
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.size)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.size.errors.required">Size is required</div>
+      </div>
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="label col-sm-3 mb-0">Activity</label>
+      <nb-select formControlName="activity" class="col-sm-9 p-0" fullWidth [status]="isFieldInvalid(f.activity) ? 'danger' : 'basic'">
+        <nb-option *ngFor="let option of activities" [value]="option.id">{{option.name}}</nb-option>
+      </nb-select>
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.activity)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.activity.errors.required">Activity is required</div>
+      </div>
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="label col-sm-3 mb-0">Address</label>
+      <input class="col-sm-9" fullWidth nbInput formControlName="address" placeholder="Address"
+             [status]="isFieldInvalid(f.address) ? 'danger' : 'basic'" shape="rectangle">
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.address)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.address.errors.required">Address is required</div>
+      </div>
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="label col-sm-3 mb-0">Country</label>
+      <nb-select formControlName="country" class="col-sm-9 p-0" fullWidth [status]="isFieldInvalid(f.country) ? 'danger' : 'basic'"
+                 (ngModelChange)="onCountryChange($event)">
+        <nb-option *ngFor="let option of countries" [value]="option.id">{{option.name}}</nb-option>
+      </nb-select>
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.country)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.country.errors.required">Country is required</div>
+      </div>
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="label col-sm-3 mb-0">State/Province</label>
+      <nb-select formControlName="state" class="col-sm-9 p-0" fullWidth [status]="isFieldInvalid(f.state) ? 'danger' : 'basic'">
+        <nb-option *ngFor="let option of states" [value]="option.id">{{option.name}}</nb-option>
+      </nb-select>
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.state)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.state.errors.required">State/Province is required</div>
+      </div>
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="label col-sm-3 mb-0">Postal code</label>
+      <input class="col-sm-9" fullWidth nbInput formControlName="zip" placeholder="Postal code"
+             [status]="isFieldInvalid(f.zip) ? 'danger' : 'basic'" shape="rectangle">
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.zip)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.zip.errors.required">Postal code is required</div>
+      </div>
+    </div>
+
+    <div class="row justify-content-end">
+      <button nbButton fullWidth shape="rectangle" status="primary" size="small" (click)="onSave()">Save</button>
+    </div>
+  </form>
+</div>
+

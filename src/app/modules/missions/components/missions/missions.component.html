@@ -1,0 +1,80 @@
+<div class="missions-page h-100">
+  <div class="page-header d-flex align-items-center justify-content-between mb-3">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <button nbButton status="primary" size="small" routerLink="/missions/create">Add New Mission <i class="fa fa-plus ml-1"></i></button>
+  </div>
+
+  <div class="nb-table bg-theme-primary table-sm shadow">
+    <table mat-table [dataSource]="dataSource" matSort class="w-100" (matSortChange)="onSortChange($event)">
+      <ng-container matColumnDef="thumbnail">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Thumbnail</th>
+        <td mat-cell *matCellDef="let item">
+          <img *ngIf="item.thumbnail" [src]="item.thumbnail" [width]="80">
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let item">
+          <div class="text-primary cursor-pointer" [routerLink]="['/missions', item.uuid]">{{item.name}}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="location">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Location</th>
+        <td mat-cell *matCellDef="let item">
+          <div class="">{{item.mission.name}}</div>
+          <div class="text-xs text-secondary">{{item.lat}}, {{item.lon}}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="distance">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Distance</th>
+        <td mat-cell *matCellDef="let item">{{item.distance_text}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="duration">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Duration</th>
+        <td mat-cell *matCellDef="let item">{{item.duration_text}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="owner">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Owner</th>
+        <td mat-cell *matCellDef="let item">
+          <app-user-cell [user]="item.owner"></app-user-cell>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let item">
+          <button nbButton status="basic" outline size="small" [matMenuTriggerFor]="menu">
+            Actions <i class="fa fa-caret-down ml-2"></i>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/missions', item.uuid, 'edit']">Edit</button>
+            <button mat-menu-item (click)="onDeleteMission(item, dialog)">Delete</button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <app-paginator [(page)]="page" [pageSize]="10" [length]="totalCount" (pageChange)="loadTableData()"></app-paginator>
+  </div>
+</div>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>Delete mission</nb-card-header>
+    <nb-card-body>
+      You are going to delete mission <b>{{data.name}}</b>
+    </nb-card-body>
+    <nb-card-footer class="d-flex justify-content-between">
+      <button nbButton size="small" (click)="ref.close(false)">Close</button>
+      <button nbButton size="small" status="danger" (click)="ref.close(true)">Delete</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

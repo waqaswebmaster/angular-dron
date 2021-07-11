@@ -1,0 +1,35 @@
+@import "src/scss/variables";
+
+.paginator {
+  padding: 1em 0;
+
+  .paginate-button {
+    min-width: 2.5em;
+    height: 2.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5em;
+    margin: 0 0.2em;
+    background: $theme-light-primary;
+    border: 1px solid $theme-light-secondary;
+    border-radius: 2px;
+    user-select: none;
+
+    &.active {
+      background: $primary;
+      border-color: $primary;
+      color: white;
+    }
+
+    &:not(.active):not(:disabled) {
+      color: $primary;
+      cursor: pointer;
+    }
+  }
+
+  .separator {
+    font-size: 0.6em;
+    padding: 0.5em;
+  }
+}

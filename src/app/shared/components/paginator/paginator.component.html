@@ -1,0 +1,23 @@
+<div class="paginator w-100 d-flex align-items-center justify-content-center" [ngClass]="class">
+  <button *ngIf="showFirstLastButton" class="paginate-button btn-first" [disabled]="page === 0" (click)="gotoPage(0)">
+    <span class="text-xl">«</span>
+  </button>
+  <button class="paginate-button btn-prev" [disabled]="page === 0" (click)="gotoPage(page - 1)">
+    <span class="text-xl">‹</span>
+  </button>
+  <ng-container *ngFor="let button of buttons">
+    <button *ngIf="button !== -1" class="paginate-button" [class.active]="page === button" (click)="gotoPage(button)">
+      {{button + 1}}
+    </button>
+    <span *ngIf="button === -1" class="separator">
+      <i class="fa fa-ellipsis-h"></i>
+    </span>
+  </ng-container>
+  <button class="paginate-button btn-first" [disabled]="page === pageCount - 1" (click)="gotoPage(page + 1)">
+    <span class="text-xl">›</span>
+  </button>
+  <button *ngIf="showFirstLastButton" class="paginate-button btn-prev" [disabled]="page === pageCount - 1" (click)="gotoPage(pageCount - 1)">
+    <span class="text-xl">»</span>
+  </button>
+</div>
+

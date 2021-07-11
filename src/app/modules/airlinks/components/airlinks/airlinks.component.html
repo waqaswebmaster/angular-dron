@@ -1,0 +1,98 @@
+<div class="airlinks-page h-100">
+  <div class="page-header d-flex align-items-center justify-content-between mb-3">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <app-search-input [(value)]="search" (valueChange)="loadTableData()"></app-search-input>
+  </div>
+
+  <div class="nb-table table-sm bg-theme-primary shadow">
+    <table mat-table [dataSource]="dataSource" matSort class="w-100" (matSortChange)="onSortChange($event)">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let item">
+          <div class="cursor-pointer text-primary" [routerLink]="['/airlinks', item.uuid_link]">{{item.name}}</div>
+          <div class="text-xs">{{item.uuid_link}}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="owner">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Owner</th>
+        <td mat-cell *matCellDef="let item">
+          <app-user-cell [user]="item.owner"></app-user-cell>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="created">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
+        <td mat-cell *matCellDef="let item">{{item.created | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="ip_address">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
+        <td mat-cell *matCellDef="let item">{{item.ip_address}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="last_seen">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Last seen</th>
+        <td mat-cell *matCellDef="let item">
+          <nb-tag *ngIf="item.is_online" class="text-uppercase mb-1" text="Online" status="success" size="tiny" appearance="outline"></nb-tag>
+          <nb-tag *ngIf="!item.is_online" class="text-uppercase mb-1" text="Offline" status="basic" size="tiny" appearance="outline"></nb-tag>
+          <div class="text-xs">{{item.last_seen}}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ap_architecture">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ap architecture</th>
+        <td mat-cell *matCellDef="let item">{{item.ap_architecture}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="ap_hardware">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ap hardware</th>
+        <td mat-cell *matCellDef="let item">{{item.ap_hardware}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="ap_software_version">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ap software version</th>
+        <td mat-cell *matCellDef="let item">{{item.ap_software_version}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="ap_software_git_hash">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ap software git hash</th>
+        <td mat-cell *matCellDef="let item">{{item.ap_software_git_hash}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="link_architecture">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Link architecture</th>
+        <td mat-cell *matCellDef="let item">{{item.link_architecture}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="link_hardware">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Link hardware</th>
+        <td mat-cell *matCellDef="let item">{{item.link_hardware}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="link_software_version">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Link software version</th>
+        <td mat-cell *matCellDef="let item">{{item.link_software_version}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="link_software_git_hash">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Link software git hash</th>
+        <td mat-cell *matCellDef="let item">{{item.link_software_git_hash}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let item" class="nowrap">
+          <button nbButton status="basic" size="small" class="mr-2" [disabled]="!item.is_online">Go Live</button>
+          <button nbButton status="danger" size="small" (click)="onDelete(item)">Delete</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <app-paginator [(page)]="page" [pageSize]="10" [length]="totalCount" (pageChange)="loadTableData()"></app-paginator>
+  </div>
+</div>
+

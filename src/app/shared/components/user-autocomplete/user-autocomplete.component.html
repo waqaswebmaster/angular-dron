@@ -1,0 +1,36 @@
+<div class="user-autocomplete" [ngClass]="class">
+  <ng-container *ngIf="!multiple">
+    <input nbInput fullWidth
+           [(ngModel)]="search"
+           [status]="invalid ? 'danger' : 'basic'"
+           [nbAutocomplete]="userAutocomplete"
+           (ngModelChange)="searchUsers()"
+           (blur)="onSearchFinish()"
+           #searchInput>
+  </ng-container>
+
+  <ng-container *ngIf="multiple">
+    <nb-tag-list>
+      <nb-tag *ngFor="let user of selectedUsers" [text]="user.full_name || user.email" [removable]="true" (remove)="onRemoveUser(user)"></nb-tag>
+      <input nbTagInput fullWidth
+             [status]="invalid ? 'danger' : 'basic'"
+             [(ngModel)]="search"
+             [nbAutocomplete]="userAutocomplete"
+             (ngModelChange)="searchUsers()"
+             (blur)="onSearchFinish()"
+             #searchInput>
+    </nb-tag-list>
+  </ng-container>
+
+  <nb-autocomplete #userAutocomplete (selectedChange)="onSelectUser($event)">
+    <nb-option *ngIf="timer">
+      <i class="fa fa-spinner fa-spin"></i>
+    </nb-option>
+
+    <nb-option *ngFor="let user of (timer ? [] : searchedUsers)" [value]="user.full_name || user.email">
+      <div class="text-ellipse" [title]="user.full_name + ' (' + user.email + ')'">
+        {{user.full_name}}&nbsp;<small>{{user.email}}
+      </small></div>
+    </nb-option>
+  </nb-autocomplete>
+</div>

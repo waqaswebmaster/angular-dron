@@ -1,0 +1,63 @@
+<div class="user-profile-tab py-2">
+  <h3>{{user.full_name}}</h3>
+
+  <form class="form-horizontal mt-3" [formGroup]="form">
+    <div class="form-group row align-items-center">
+      <label class="label col-sm-3 mb-0">Fist Name</label>
+      <input class="col-sm-9" fullWidth nbInput formControlName="first_name" placeholder="First Name"
+             [status]="isFieldInvalid(f.first_name) ? 'danger' : 'basic'" shape="rectangle">
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.first_name)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.first_name.errors.required">First name is required</div>
+      </div>
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="label col-sm-3 mb-0">Last Name</label>
+      <input class="col-sm-9" fullWidth nbInput formControlName="last_name" placeholder="Last Name"
+             [status]="isFieldInvalid(f.last_name) ? 'danger' : 'basic'" shape="rectangle">
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.last_name)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.last_name.errors.required">Last name is required</div>
+      </div>
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="label col-sm-3 mb-0">Phone</label>
+      <ngx-intl-tel-input class="col-sm-9 p-0" formControlName="phone" [class.is-invalid]="isFieldInvalid(f.phone)"
+                          [preferredCountries]="preferredCountries" [phoneValidation]="true"></ngx-intl-tel-input>
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.phone)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.phone.errors.required">Phone is required</div>
+        <div *ngIf="f.phone.errors.validatePhoneNumber">Phone is invalid</div>
+      </div>
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="label col-sm-3 mb-0">Country</label>
+      <nb-select formControlName="country" class="col-sm-9 p-0" fullWidth [status]="isFieldInvalid(f.country) ? 'danger' : 'basic'">
+        <nb-option *ngFor="let option of countries" [value]="option.id">{{option.name}}</nb-option>
+      </nb-select>
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.country)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.country.errors.required">Country is required</div>
+      </div>
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="label col-sm-3 mb-0">Language</label>
+      <nb-select formControlName="language" class="col-sm-9 p-0" fullWidth [status]="isFieldInvalid(f.language) ? 'danger' : 'basic'">
+        <nb-option *ngFor="let option of languages" [value]="option.code">{{option.name}}</nb-option>
+      </nb-select>
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.language)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.language.errors.required">Language is required</div>
+      </div>
+    </div>
+
+    <div class="row justify-content-end">
+      <button nbButton shape="rectangle" status="primary" size="small" (click)="onSave()">Save Changes</button>
+    </div>
+  </form>
+</div>
+

@@ -1,0 +1,70 @@
+<div class="airlink-access-tab py-2">
+  <div class="d-flex align-items-center justify-content-between mb-2">
+    <h3 class="mb-0">Manage access</h3>
+    <button nbButton status="primary" size="small" (click)="onOpenAddModal(dialog)">Add new access</button>
+  </div>
+
+  <table class="nb-table table">
+    <thead>
+    <tr>
+      <th>User</th>
+      <th>Level</th>
+      <th>Remove</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users">
+      <td>
+        <div>{{user.full_name}}</div>
+        <div class="text-xs text-secondary">{{user.email}}</div>
+      </td>
+      <td>
+        <nb-select [(ngModel)]="user.level">
+          <nb-option *ngFor="let option of levels" [value]="option">{{option}}</nb-option>
+        </nb-select>
+      </td>
+      <td>
+        <button nbButton status="danger" size="small">Remove</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #dialog let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>Add Member</nb-card-header>
+    <nb-card-body [formGroup]="addForm">
+      <div class="form-group row align-items-center">
+        <label class="label col-sm-3 mb-0">User</label>
+        <div class="col-sm-9">
+          <app-user-autocomplete [value]="f.user.value"
+                                 [invalid]="isFieldInvalid(f.user)"
+                                 (valueChange)="onFieldChange(f.user, $event)"></app-user-autocomplete>
+        </div>
+        <div class="col-sm-3"></div>
+        <div *ngIf="isFieldInvalid(f.user)" class="invalid-feedback col-sm-9 d-block">
+          <div *ngIf="f.user.errors.required">User is required</div>
+        </div>
+      </div>
+
+      <div class="form-group row align-items-center">
+        <label class="label col-sm-3 mb-0">Access level</label>
+        <div class="col-sm-9">
+          <nb-select formControlName="level" fullWidth [status]="isFieldInvalid(f.level) ? 'danger' : 'basic'">
+            <nb-option *ngFor="let option of levels" [value]="option">{{option}}</nb-option>
+          </nb-select>
+        </div>
+        <div class="col-sm-3"></div>
+        <div *ngIf="isFieldInvalid(f.level)" class="invalid-feedback col-sm-9 d-block">
+          <div *ngIf="f.level.errors.required">Access level is required</div>
+        </div>
+      </div>
+    </nb-card-body>
+    <nb-card-footer class="d-flex justify-content-between">
+      <button nbButton size="small" (click)="ref.close()">Close</button>
+      <button nbButton size="small" status="primary" (click)="onAddAccess(ref)">Add</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+

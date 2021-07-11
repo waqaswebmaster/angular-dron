@@ -1,0 +1,72 @@
+<div class="smartap-profile-tab py-2">
+  <form class="form-horizontal mt-3" [formGroup]="form">
+    <div class="form-group row align-items-center">
+      <label class="label col-sm-3 mb-0">UUID</label>
+      <span class="col-sm-9 p-0">{{smartAP.uuid_ap}}</span>
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="label col-sm-3 mb-0">Name</label>
+      <input class="col-sm-9" fullWidth nbInput formControlName="name" placeholder="Name"
+             [status]="isFieldInvalid(f.name) ? 'danger' : 'basic'" shape="rectangle">
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.name)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.name.errors.required">Name is required</div>
+      </div>
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="label col-sm-3 mb-0">Vehicle type</label>
+      <nb-select formControlName="vehicle_type_name" class="col-sm-9 p-0" fullWidth [status]="isFieldInvalid(f.vehicle_type_name) ? 'danger' : 'basic'">
+        <nb-option *ngFor="let option of vehicleTypes" [value]="option">{{option}}</nb-option>
+      </nb-select>
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.vehicle_type_name)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.vehicle_type_name.errors.required">Vehicle type is required</div>
+      </div>
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="label col-sm-3 mb-0">Status</label>
+      <nb-select formControlName="status_name" class="col-sm-9 p-0" fullWidth [status]="isFieldInvalid(f.status_name) ? 'danger' : 'basic'">
+        <nb-option *ngFor="let option of statuses" [value]="option">{{option}}</nb-option>
+      </nb-select>
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.status_name)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.status_name.errors.required">Status is required</div>
+      </div>
+    </div>
+
+    <div class="form-group row align-items-center" *ngIf="smartAP.can_change_owner">
+      <label class="label col-sm-3 mb-0">Owner</label>
+      <app-user-autocomplete class="col-sm-9 p-0"
+                             [value]="f.owner.value"
+                             [initialUser]="smartAP.owner"
+                             [invalid]="isFieldInvalid(f.owner)"
+                             (valueChange)="onFieldChange(f.owner, $event)"></app-user-autocomplete>
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.owner)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.owner.errors.required">Owner is required</div>
+      </div>
+    </div>
+
+    <div class="form-group row align-items-center" *ngIf="smartAP.can_change_users">
+      <label class="label col-sm-3 mb-0">Users</label>
+      <app-user-autocomplete class="col-sm-9 p-0"
+                             [value]="f.users.value"
+                             [initialUser]="smartAP.users"
+                             [multiple]="true"
+                             [invalid]="isFieldInvalid(f.users)"
+                             (valueChange)="onFieldChange(f.users, $event)"></app-user-autocomplete>
+      <div class="col-sm-3"></div>
+      <div *ngIf="isFieldInvalid(f.users)" class="invalid-feedback col-sm-9 d-block pl-1">
+        <div *ngIf="f.users.errors.required">This field is required</div>
+      </div>
+    </div>
+
+    <div class="row justify-content-end">
+      <button nbButton shape="rectangle" status="primary" size="small" (click)="onSave()">Save Changes</button>
+    </div>
+  </form>
+</div>
+

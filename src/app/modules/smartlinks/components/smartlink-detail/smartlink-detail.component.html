@@ -1,0 +1,22 @@
+<div class="smartlink-detail-page">
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" class="mb-3"></app-breadcrumb>
+
+  <nb-card *ngIf="smartLink">
+    <nb-tabset class="px-3">
+      <nb-tab tabTitle="Info">
+        <app-smartlink-info-tab [smartLink]="smartLink"></app-smartlink-info-tab>
+      </nb-tab>
+      <nb-tab tabTitle="Edit">
+        <app-smartlink-edit-tab [smartLink]="smartLink"></app-smartlink-edit-tab>
+      </nb-tab>
+      <nb-tab tabTitle="Access">
+        <app-smartlink-access-tab [smartLink]="smartLink"></app-smartlink-access-tab>
+      </nb-tab>
+      <nb-tab tabTitle="Sessions">
+        <app-smartlink-sessions-tab [smartLink]="smartLink"></app-smartlink-sessions-tab>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card>
+
+</div>
+

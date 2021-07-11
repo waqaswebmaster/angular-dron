@@ -1,0 +1,15 @@
+<div class="smartap-detail-page">
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" class="mb-3"></app-breadcrumb>
+
+  <nb-card *ngIf="smartAP">
+    <nb-tabset class="px-3">
+      <nb-tab tabTitle="Info">
+        <app-smartap-info-tab [smartAP]="smartAP"></app-smartap-info-tab>
+      </nb-tab>
+      <nb-tab *ngIf="smartAP.can_edit" tabTitle="Edit">
+        <app-smartap-edit-tab [smartAP]="smartAP"></app-smartap-edit-tab>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card>
+</div>
+

@@ -1,0 +1,10 @@
+<nb-card class="chart-card-card mb-2">
+  <nb-card-header>
+    <i *ngIf="icon" [ngClass]="icon" class="mr-2"></i>
+    <span [innerHTML]="title"></span>
+  </nb-card-header>
+
+  <nb-card-body class="p-0">
+    <div class="chart" [chart]="chart"></div>
+  </nb-card-body>
+</nb-card>

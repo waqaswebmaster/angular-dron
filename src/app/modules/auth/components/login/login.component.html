@@ -1,0 +1,38 @@
+<nb-card class="p-4">
+  <h1 class="text-center">Login</h1>
+  <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+    <fieldset class="form-group">
+      <label class="label">Email address:</label>
+      <input fullWidth nbInput formControlName="email" placeholder="Email address"
+             [status]="isFieldInvalid(f.email) ? 'danger' : 'basic'" shape="rectangle">
+      <div *ngIf="isFieldInvalid(f.email)" class="invalid-feedback d-block pl-2">
+        <div *ngIf="f.email.errors.required">Email is required</div>
+        <div *ngIf="f.email.errors.pattern">Email is invalid</div>
+      </div>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <label class="label">Password:</label>
+      <input type="password" fullWidth nbInput formControlName="password" placeholder="Password"
+             [status]="isFieldInvalid(f.password) ? 'danger' : 'basic'" shape="rectangle">
+      <div *ngIf="isFieldInvalid(f.password)" class="invalid-feedback d-block pl-2">
+        <div *ngIf="f.password.errors.required">Password is required</div>
+      </div>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <nb-checkbox formControlName="remember">Remember me</nb-checkbox>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <button nbButton type="submit" fullWidth status="primary" [disabled]="loginForm.invalid" size="large">LOG IN</button>
+    </fieldset>
+
+    <fieldset *ngIf="loginForm.errors" class="form-group">
+      <div class="invalid-feedback d-block text-right">
+        <i class="fa fa-exclamation-triangle mr-1"></i>
+        <span *ngIf="loginForm.errors.error" [innerHTML]="formError"></span>
+      </div>
+    </fieldset>
+  </form>
+</nb-card>

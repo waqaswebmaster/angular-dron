@@ -1,0 +1,38 @@
+<div class="smartlink-sessions-tab">
+  <div class="nb-table table-sm bg-theme-primary nowrap">
+    <table mat-table [dataSource]="dataSource" matSort class="w-100" (matSortChange)="onSortChange($event)">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <td mat-cell *matCellDef="let item">
+          <span class="cursor-pointer text-primary" [routerLink]="['/sessions', item.id]">{{item.id}}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="record_count">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Record count</th>
+        <td mat-cell *matCellDef="let item">{{item.record_count}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="record_start_at">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Record start at</th>
+        <td mat-cell *matCellDef="let item">{{item.record_start_at | date: 'MMM dd, yyyy, h:mm a'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="record_stop_at">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Record stop at</th>
+        <td mat-cell *matCellDef="let item">{{item.record_stop_at | date: 'MMM dd, yyyy, h:mm a'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="created">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
+        <td mat-cell *matCellDef="let item">{{item.created | date: 'MMM dd, yyyy, h:mm a'}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <app-paginator [(page)]="page" [pageSize]="10" [length]="totalCount" (pageChange)="loadTableData()"></app-paginator>
+  </div>
+</div>
+

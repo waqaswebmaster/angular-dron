@@ -1,0 +1,58 @@
+<div class="user-profile-tab py-2">
+  <h3>{{user.full_name}}</h3>
+
+  <nb-alert status="warning" outline="warning" size="small">
+    <div>
+      If you would like to enable one or more features, you must first
+      <span class="text-primary cursor-pointer">add your payment detail here</span>
+    </div>
+  </nb-alert>
+
+  <table class="nb-table table table-sm nowrap">
+    <thead>
+    <tr>
+      <th>
+        <div class="title">Name</div>
+        <div class="text-xs text-secondary font-weight-normal">Service</div>
+      </th>
+      <th class="text-right">
+        <div class="title"><i class="far fa-question-circle" nbTooltip="Can be used once for each feature"></i> Free trial</div>
+        <div class="text-xs text-secondary font-weight-normal">Time</div>
+      </th>
+      <th class="text-right">
+        <div class="title">Monthly fee</div>
+        <div class="text-xs text-secondary font-weight-normal">US Dollars</div>
+      </th>
+      <th class="text-right">
+        <div class="title">Yearly fee</div>
+        <div class="text-xs text-secondary font-weight-normal">US Dollars</div>
+      </th>
+      <th class="text-right">
+        <div class="title">Started</div>
+        <div class="text-xs text-secondary font-weight-normal">Date</div>
+      </th>
+      <th class="text-right">
+        <div class="title">Expiration</div>
+        <div class="text-xs text-secondary font-weight-normal">Date</div>
+      </th>
+      <th class="text-right">
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let feature of features">
+      <td>
+        {{feature.name}}
+        <i *ngIf="feature.description" [nbTooltip]="feature.description" class="fa fa-info-circle"></i>
+      </td>
+      <td>{{feature.free_trial || '-'}}</td>
+      <td>{{feature.monthly_fee | currency}}</td>
+      <td>{{feature.yearly_fee | currency}}</td>
+      <td>{{feature.started || '-'}}</td>
+      <td>{{feature.expiration || '-'}}</td>
+      <td><button nbButton shape="rectangle" status="success" size="small">Subscribe</button></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

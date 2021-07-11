@@ -1,0 +1,39 @@
+<div class="user-profile-tab py-2">
+  <h3>{{user.full_name}}</h3>
+  <h6>{{user.email}}</h6>
+
+  <br />
+
+  <div class="info d-flex">
+    <span>Access levels:</span>&nbsp;
+    <b *ngIf="!user.level_name">NONE</b>
+    <nb-tag *ngIf="user.level_name" [text]="user.level_name" status="primary" size="tiny"></nb-tag>
+  </div>
+
+  <br />
+
+  <div class="info d-flex">
+    <span>Country:</span>&nbsp;
+    <b>{{user.country_name || 'NONE'}}</b>
+  </div>
+  <div class="info d-flex">
+    <span>Phone:</span>&nbsp;
+    <b>{{user.phone || 'NONE'}}</b>
+  </div>
+  <div class="info d-flex">
+    <span>Language:</span>&nbsp;
+    <b>{{user.language_name || 'NONE'}}</b>
+  </div>
+
+  <br />
+
+  <div class="info d-flex">
+    <span>Flights:</span>&nbsp;
+    <b>{{user.flights || 0}}</b>
+  </div>
+  <div class="info d-flex">
+    <span>Flight hours:</span>&nbsp;
+    <b>{{user.flights_hours || 'NONE'}}</b>
+  </div>
+</div>
+

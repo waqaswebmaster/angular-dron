@@ -1,0 +1,164 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+html {
+  font-size: 16px;
+
+  @each $resolution, $fontSize in ($lg, 15px), ($md, 14px), ($sm, 13px), ($xs, 12px) {
+    @include breakpoint($resolution) {
+      font-size: $fontSize;
+    }
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #D4D4D4;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #898989;
+}
+
+.d-flex-center {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+@for $i from 1 through 3 {
+  .flex-#{$i} {
+    flex: $i !important;
+  }
+}
+
+.d-grid {
+  display: grid !important;
+}
+
+$template: 'auto';
+@for $i from 1 through 10 {
+  .d-grid-#{$i} {
+    @extend .d-grid;
+    grid-template-columns: #{$template} !important;
+  }
+  $template: $template + ' auto';
+}
+
+@for $i from 1 through 20 {
+  .grid-gap-#{$i}p {
+    grid-gap: 1px * $i !important;
+  }
+}
+
+@for $i from 1 through 10 {
+  .fs-#{$i} {
+    font-size: 0.5rem * $i !important;
+  }
+}
+
+@for $i from 1 through 50 {
+  .fs-#{$i}p {
+    font-size: 1px * $i !important;
+  }
+}
+
+.text-xs {
+  font-size: 0.75rem !important;
+  line-height: 1rem !important;
+}
+
+.text-sm {
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+}
+
+.text-base {
+  font-size: 1rem !important;
+  line-height: 1.5rem !important;
+}
+
+.text-lg {
+  font-size: 1.125rem !important;
+  line-height: 1.75rem !important;
+}
+
+.text-xl {
+  font-size: 1.25rem !important;
+  line-height: 1.75rem !important;
+}
+
+.text-2xl {
+  font-size: 1.5rem !important;
+  line-height: 2rem !important;
+}
+
+.text-3xl {
+  font-size: 1.875rem !important;
+  line-height: 2.25rem !important;
+}
+
+.text-4xl {
+  font-size: 2.25rem !important;
+  line-height: 2.5rem !important;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.w-0 {
+  width: 0 !important;
+}
+
+.h-0 {
+  height: 0 !important;
+}
+
+.justify-content-evenly {
+  justify-content: space-evenly !important;
+}
+
+.text-ellipse {
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+}
+
+.hover-text-primary:hover {
+  color: $primary !important;
+}
+
+.hover-underline:hover {
+  text-decoration: underline !important;
+}
+
+.select-none {
+  user-select: none !important;
+}
+
+.events-none {
+  pointer-events: none !important;
+}
+
+.nowrap {
+  white-space: nowrap !important;
+}
+
+.font-primary {
+  font-family: $font-primary !important;
+}

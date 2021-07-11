@@ -1,0 +1,57 @@
+<div class="organisation-profile-tab py-2">
+  <h3>{{organisation.name}}</h3>
+
+  <br />
+
+  <div class="info d-flex">
+    <span>Country:</span>&nbsp;
+    <b>{{organisation.country_name || 'NONE'}}</b>
+  </div>
+  <div class="info d-flex">
+    <span>State:</span>&nbsp;
+    <b>{{organisation.state_name || 'NONE'}}</b>
+  </div>
+  <div class="info d-flex">
+    <span>Address:</span>&nbsp;
+    <b>{{organisation.address || 'NONE'}}</b>
+  </div>
+  <div class="info d-flex">
+    <span>Zip:</span>&nbsp;
+    <b>{{organisation.zip || 'NONE'}}</b>
+  </div>
+
+  <br />
+
+  <div class="info d-flex">
+    <span>Email:</span>&nbsp;
+    <b>{{organisation.email || 'NONE'}}</b>
+  </div>
+  <div class="info d-flex">
+    <span>Phone:</span>&nbsp;
+    <b>{{organisation.phone || 'NONE'}}</b>
+  </div>
+  <div class="info d-flex">
+    <span>Website:</span>&nbsp;
+    <b>{{organisation.website || 'NONE'}}</b>
+  </div>
+
+  <br />
+
+  <div class="info d-flex">
+    <span>Activity:</span>&nbsp;
+    <b>{{organisation.activity_name || 'NONE'}}</b>
+  </div>
+  <div class="info d-flex">
+    <span>Size:</span>&nbsp;
+    <b>{{organisation.size_text || 'NONE'}}</b>
+  </div>
+
+  <br />
+
+  <div class="info d-flex flex-wrap">
+    <span>Members:</span>
+    <nb-tag *ngFor="let staff of organisation.staff" [text]="staff.full_name"
+            status="primary" size="tiny" class="ml-1"></nb-tag>
+  </div>
+</div>
+

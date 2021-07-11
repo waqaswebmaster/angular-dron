@@ -1,0 +1,44 @@
+<div class="users-page h-100">
+  <div class="page-header d-flex align-items-center justify-content-between mb-3">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <app-search-input [(value)]="search" (valueChange)="loadTableData()"></app-search-input>
+  </div>
+
+  <div class="nb-table bg-theme-primary shadow">
+    <table mat-table [dataSource]="dataSource" matSort class="w-100" (matSortChange)="onSortChange($event)">
+      <ng-container matColumnDef="full_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let item">
+          <app-user-cell [user]="item"></app-user-cell>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+        <td mat-cell *matCellDef="let item">
+          <div class="d-flex align-items-center">
+            <i *ngIf="item.email_is_verified" class="far fa-check-circle text-success"></i>
+            <i *ngIf="!item.email_is_verified" class="far fa-times-circle text-secondary"></i>
+            &nbsp;{{item.email}}
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="date_joined">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date joined</th>
+        <td mat-cell *matCellDef="let item">{{item.date_joined | date: 'MM/dd/yyyy h:m a'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="last_login">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Last login</th>
+        <td mat-cell *matCellDef="let item">{{item.last_login}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <app-paginator [(page)]="page" [pageSize]="10" [length]="totalCount" (pageChange)="loadTableData()"></app-paginator>
+  </div>
+</div>
+

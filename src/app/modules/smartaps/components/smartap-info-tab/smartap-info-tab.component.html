@@ -1,0 +1,71 @@
+<div class="smartAP-info-tab py-2">
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <div class="info d-flex">
+        <span>Platform:</span>&nbsp;
+        <b>{{smartAP.platform || 'NONE'}}</b>
+      </div>
+      <div class="info d-flex">
+        <span>Type:</span>&nbsp;
+        <b>{{smartAP.vehicle_type_name || 'NONE'}}</b>
+      </div>
+      <div class="info d-flex">
+        <span>Status:</span>&nbsp;
+        <b>{{smartAP.status_name || 'NONE'}}</b>
+      </div>
+      <div class="info d-flex">
+        <span>Software:</span>&nbsp;
+        <b>{{smartAP.software || 'NONE'}}</b>
+      </div>
+      <div class="info d-flex">
+        <span>Hardware:</span>&nbsp;
+        <b>{{smartAP.hardware || 'NONE'}}</b>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="info d-flex">
+        <span>Owner:</span>&nbsp;
+        <b *ngIf="smartAP.owner" class="text-primary cursor-pointer" [routerLink]="['/users', smartAP.owner.id]">{{smartAP.owner.full_name}}</b>
+      </div>
+      <div class="info d-flex">
+        <span>Users:</span>
+        <span *ngFor="let user of smartAP.users; let i = index">
+          {{ i> 0 ? ',' : '' }}&nbsp;
+          <b class="text-primary cursor-pointer" [routerLink]="['/users', user.id]">{{user.full_name}}</b>
+        </span>
+      </div>
+      <div class="info d-flex">
+        <span>Flights:</span>&nbsp;
+        <b>{{smartAP.flight || 0}}</b>
+      </div>
+      <div class="info d-flex">
+        <span>Flight hours:</span>&nbsp;
+        <b>{{smartAP.flights_duration || '0:00:00'}}</b>
+      </div>
+    </div>
+  </div>
+
+  <table class="nb-table table">
+    <thead>
+    <tr>
+      <th>Date</th>
+      <th>Duration</th>
+      <th>Pilot</th>
+      <th>Rating</th>
+      <th>Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let log of smartAP.logs">
+      <td>{{log.datetime_of_start | date: 'MMM dd, yyyy, h:mm a'}}</td>
+      <td>{{log.duration_text}}</td>
+      <td>
+        <span *ngIf="log.pilot" class="text-primary cursor-pointer" [routerLink]="['/users', log.pilot.id]">{{log.pilot.full_name}}</span>
+      </td>
+      <td>{{getRatingText(log.rating)}}</td>
+      <td>{{getOperationTypeText(log.operation_type)}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

@@ -1,0 +1,21 @@
+<div class="user-profile-tab py-2">
+  <h3>{{user.full_name}}</h3>
+
+  <table class="nb-table table">
+    <thead>
+    <tr>
+      <th>Date</th>
+      <th>Action</th>
+      <th>IP Address</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let activity of activities">
+      <td>{{activity.date | date: 'MMM d, y, h:mm a'}}</td>
+      <td>{{activity.action}}</td>
+      <td>{{activity.ip}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

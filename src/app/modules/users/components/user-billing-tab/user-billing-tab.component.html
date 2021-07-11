@@ -1,0 +1,64 @@
+<div class="user-profile-tab py-2">
+  <h3>{{user.full_name}}</h3>
+
+  <form class="form-horizontal mt-3" [formGroup]="form">
+    <nb-alert outline="primary" size="small" class="text-center text-primary">Provide your card data</nb-alert>
+
+    <nb-card class="p-3" *ngFor="let card of cards; let i = index">
+      <form [formGroup]="card">
+        <div class="row">
+          <div class="form-group col-12">
+            <label class="label">Card Number</label>
+            <div class="nb-input with-prefix with-suffix">
+              <input fullWidth nbInput formControlName="number" placeholder="1234 1234 1234 1234"
+                     mask="0000 0000 0000 0000" [status]="isFieldInvalid(card.controls.number) ? 'danger' : 'basic'" shape="rectangle">
+              <i class="prefix far fa-credit-card text-secondary"></i>
+              <i class="suffix fa fa-address-card text-secondary"></i>
+            </div>
+            <div *ngIf="isFieldInvalid(card.controls.number)" class="invalid-feedback d-block pl-1">
+              <div *ngIf="card.controls.number.errors.required">Card Number is required</div>
+              <div *ngIf="card.controls.number.errors.mask">Card Number is invalid</div>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6">
+            <label class="label">Card Expiration</label>
+            <input fullWidth nbInput formControlName="expiration" placeholder="MM / YY"
+                   mask="00 / 00" [status]="isFieldInvalid(card.controls.expiration) ? 'danger' : 'basic'" shape="rectangle">
+            <div *ngIf="isFieldInvalid(card.controls.expiration)" class="invalid-feedback d-block pl-1">
+              <div *ngIf="card.controls.expiration.errors.required">Card Expiration is required</div>
+              <div *ngIf="card.controls.expiration.errors.mask || card.controls.expiration.errors.pattern">Card Expiration is invalid</div>
+            </div>
+          </div>
+          <div class="form-group col-12 col-md-6">
+            <label class="label">CVC CODE</label>
+            <div class="nb-input with-suffix">
+              <input fullWidth nbInput formControlName="cvc" placeholder="CVC"
+                     [status]="isFieldInvalid(card.controls.cvc) ? 'danger' : 'basic'" shape="rectangle">
+              <i class="suffix fa fa-address-card text-secondary"></i>
+            </div>
+            <div *ngIf="isFieldInvalid(card.controls.cvc)" class="invalid-feedback d-block pl-1">
+              <div *ngIf="card.controls.cvc.errors.required">CVC CODE is required</div>
+            </div>
+          </div>
+          <div class="form-group col-12">
+            <label class="label">Card Holder</label>
+            <input fullWidth nbInput formControlName="holder" placeholder="JOHN SMITH"
+                   [status]="isFieldInvalid(card.controls.holder) ? 'danger' : 'basic'" shape="rectangle">
+            <div *ngIf="isFieldInvalid(card.controls.holder)" class="invalid-feedback d-block pl-1">
+              <div *ngIf="card.controls.holder.errors.required">Card Holder is required</div>
+            </div>
+          </div>
+          <div class="form-group col-12">
+            <div class="d-flex align-items-center justify-content-between">
+              <nb-checkbox [checked]="card === defaultCard" (checkedChange)="this.defaultCard = card">Set as default</nb-checkbox>
+              <button *ngIf="i> 0" nbButton shape="rectangle" outline status="danger" size="small" (click)="onRemoveCard(card)">Delete Card</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </nb-card>
+
+    <button nbButton shape="rectangle" status="primary" size="small" fullWidth (click)="onAddCard()">Add New Card</button>
+  </form>
+</div>
+

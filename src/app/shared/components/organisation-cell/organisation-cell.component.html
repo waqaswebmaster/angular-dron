@@ -1,0 +1,8 @@
+<div class="d-flex align-items-center cursor-pointer" [routerLink]="['/organisations', organisation.id]">
+  <div *ngIf="organisation.logo" class="avatar events-none"
+       [style.background-image]="'url(' + organisation.logo + ')'">
+  </div>
+
+  <i *ngIf="!organisation.logo" class="fa fa-user-circle text-3xl"></i>
+  &nbsp;&nbsp;<span class="text-primary">{{organisation.name}}</span>
+</div>

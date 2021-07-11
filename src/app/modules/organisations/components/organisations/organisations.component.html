@@ -1,0 +1,72 @@
+<div class="Organisations-page h-100">
+  <div class="page-header d-flex align-items-center justify-content-between mb-3">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <button nbButton status="primary" size="small" routerLink="/organisations/create">
+      <i class="fa fa-plus mr-1"></i> Create new organisation
+    </button>
+  </div>
+
+  <div class="nb-table bg-theme-primary table-sm nowrap shadow">
+    <table mat-table [dataSource]="dataSource" matSort class="w-100" (matSortChange)="onSortChange($event)">
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let item">
+          <app-organisation-cell [organisation]="item"></app-organisation-cell>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="activity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Activity</th>
+        <td mat-cell *matCellDef="let item">{{item.activity_name}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
+        <td mat-cell *matCellDef="let item">{{item.country_name}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="state">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>State/Province</th>
+        <td mat-cell *matCellDef="let item">{{item.state_name}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="size">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Size</th>
+        <td mat-cell *matCellDef="let item">{{item.size_text}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let item">
+          <button nbButton status="danger" size="small" (click)="onDelete(item, dialog)">Delete</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <app-paginator [(page)]="page" [pageSize]="10" [length]="totalCount" (pageChange)="loadTableData()"></app-paginator>
+  </div>
+</div>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>Delete organisation</nb-card-header>
+    <nb-card-body>
+      You are going to delete organisation <b>{{data.name}}</b>
+      <br /><br />
+      The following staff would be also deleted
+      <ul>
+        <li *ngFor="let staff of data.staff">
+          {{staff.level}}: {{staff.full_name}}({{staff.email}})
+        </li>
+      </ul>
+    </nb-card-body>
+    <nb-card-footer class="d-flex justify-content-between">
+      <button nbButton size="small" (click)="ref.close(false)">Close</button>
+      <button nbButton size="small" status="danger" (click)="ref.close(true)">Delete</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

@@ -1,0 +1,269 @@
+<template class="waypoint">
+  <div class="waypoint">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="title"></div>
+      <i *ngIf="mode !== 'view'" class="fas fa-trash delete-icon"></i>
+    </div>
+    <div class="collapse spoiler">
+      <select class="custom-select mt-2 command">
+        <option value="Waypoint">Waypoint</option>
+        <option value="Takeoff">Takeoff</option>
+        <option value="Landing">Landing</option>
+      </select>
+
+      <div class="row align-items-center">
+        <div class="col-2">
+          <span>Altitude</span>
+        </div>
+        <div class="col-8 counter">
+          <button tabindex="-1" class="d-flex justify-content-center align-items-center altitude-minus">-</button>
+          <input value="" type="text" class="altitude">
+          <button tabindex="-1" class="d-flex justify-content-center align-items-center altitude-plus">+</button>
+        </div>
+        <div class="col-2">
+          <span>m</span>
+        </div>
+      </div>
+
+      <div class="row align-items-center">
+        <div class="col-2">
+          <span>Speed</span>
+        </div>
+        <div class="col-8 counter">
+          <button tabindex="-1" class="d-flex justify-content-center align-items-center speed-minus">-</button>
+          <input value="1" type="text" class="speed">
+          <button tabindex="-1" class="d-flex justify-content-center align-items-center speed-plus">+</button>
+        </div>
+        <div class="col-2">
+          <span>m/s</span>
+        </div>
+      </div>
+
+      <div class="row align-items-center mb-4">
+        <div class="col-2">
+          <span>Delay</span>
+        </div>
+
+        <div class="col-4 range">
+          <div class="slider delay">
+            <div class="custom-handle ui-slider-handle"></div>
+          </div>
+        </div>
+
+        <div class="col-2">
+          <span>Heading</span>
+        </div>
+
+        <div class="col-4 range">
+          <div class="slider heading">
+            <div class="custom-handle ui-slider-handle"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row align-items-center">
+        <div class="col-2">
+          <span>Lat</span>
+        </div>
+        <div class="col-10">
+          <input type="text" class="w-100 lat">
+        </div>
+      </div>
+
+      <div class="row align-items-center">
+        <div class="col-2">
+          <span>Lon</span>
+        </div>
+        <div class="col-10">
+          <input type="text" class="w-100 lon">
+        </div>
+      </div>
+
+      <div *ngIf="mode !== 'view'" class="row mb-1 pov-buttons">
+        <div class="col-12">
+          <button class="btn btn-primary w-100 pov-create">Create Point of View</button>
+          <button class="btn btn-primary w-100 pov-cancel" style="display: none;">Cancel Point of View</button>
+        </div>
+      </div>
+
+      <ng-container *ngIf="mode !== 'view'">
+        <div class="row pov-elements my-0" style="display:none;">
+          <div class="col-12">
+            <h6>Point of View:</h6>
+          </div>
+        </div>
+
+        <div class="row pov-elements my-0" style="display:none;">
+          <div class="col-4">
+            <span class="w-100">Lat</span>
+          </div>
+          <div class="col-4">
+            <span class="w-100">Lon</span>
+          </div>
+          <div class="col-4">
+            <span class="w-100">Alt</span>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="row mb-1 mt-0 pov-elements" style="display:none;">
+        <div class="col-4">
+          <input type="text" class="w-100 pov-lat">
+        </div>
+        <div class="col-4">
+          <input type="text" class="w-100 pov-lon">
+        </div>
+
+        <ng-container *ngIf="mode !== 'view'">
+          <div class="col-2">
+            <input type="text" class="w-100 pov-alt">
+          </div>
+          <div class="col-2">
+            <i class="fas fa-trash pov-delete-icon"></i>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="mode === 'view'">
+          <div class="col-4">
+            <input type="text" class="w-100 pov-alt">
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</template>
+
+<div *ngIf="mission" class="map-container" [class.detail]="mode !== 'view'">
+  <div id="cesiumContainer" style="height: calc(100vh - 5rem)"></div>
+
+  <div class="alert alert-warning home-alert" role="alert" [style.display]="mission.uuid ? 'none' : 'block'">
+    <span class="alert-message">
+      Select initial flight location (intended home position) by double clicking on the map
+    </span>
+  </div>
+
+  <div class="alert alert-warning point-alert" role="alert" [style.display]="mission.uuid ? 'block' : 'none'">
+    <span class="alert-message">
+      Add or remove waypoints by double clicking on the map
+    </span>
+  </div>
+
+  <div class="alert alert-warning pov-alert" role="alert"  >
+    <span class="alert-message">
+      Double click on map to add point of view
+    </span>
+  </div>
+
+  <form class="mission-form" [class.closed]="mode === 'create'" (submit)="onSubmit($event)">
+    <div class="tag d-flex justify-content-center align-items-center">
+      <i class="fas fa-chevron-right"></i>
+    </div>
+
+    <div class="mission-top">
+      <div class="row mission-name-row">
+        <div class="col-12 d-flex justify-content-start align-items-center">
+          <textarea name="name" class="mission-name" style="display: none" [value]="mission.name || 'New mission'"></textarea>
+          <span class="mission-name">{{ mission.name || 'New mission' }}</span>
+          <i *ngIf="mode !== 'view'" class="far fa-edit mission-name-edit"></i>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-9">
+          <span class="mission-address"></span>
+          <div style="margin-top: 8px;">
+            <span class="mission-lat">{{ mission.lat || '' }}{{ mission.lat ? ',' : '' }}</span>
+            <span class="mission-lon">{{ mission.lon || '' }}</span>
+          </div>
+          <input name="lat" type="hidden" [value]="mission.lat || ''" class="mission-lat">
+          <input name="lon" type="hidden" [value]="mission.lon || ''" class="mission-lon">
+        </div>
+        <div class="col-3">
+          <i class="fas fa-cloud-sun weather-icon"></i><br>
+          <span style="font-size: 18px"><span class="mission-weather"></span> C</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mission-waypoints"></div>
+
+    <div class="mission-bottom">
+      <div class="d-flex justify-content-between align-items-center">
+      <span>
+        <i class="fa fa-map-marker-alt"></i>
+        <span class="mission-waypoints-count">0</span>
+        <input type="hidden" name="waypoints" value="0" class="mission-waypoints-count">
+      </span>
+
+        <span>
+        <i class="far fa-clock"></i>
+        <span class="mission-duration">0</span>
+        <input type="hidden" name="duration" value="0" class="mission-duration">
+      </span>
+
+        <span>
+        <i class="fa fa-route"></i>
+        <span class="mission-distance">0</span>
+        <input type="hidden" name="distance" value="0" class="mission-distance">
+      </span>
+      </div>
+
+      <button *ngIf="mode === 'view'" [routerLink]="['/missions', mission.uuid, 'edit']" class="btn btn-primary w-100 mt-2">Edit</button>
+      <button *ngIf="mode === 'edit'" type="submit" class="btn btn-primary w-100 mt-2 mission-form-submit" disabled>Save</button>
+      <button *ngIf="mode === 'create'" type="submit" class="btn btn-primary w-100 mt-2 mission-form-submit" disabled>Create</button>
+    </div>
+
+    <input type="hidden" name="mission" value="{}" class="mission-json">
+
+    <div id="mission-data" class="d-none">{{mission.mission | json}}</div>
+
+<!--    {{ mission.mission | json }}-->
+    <!--  {{ object.mission|json_script:"mission-data" }} ??? -->
+  </form>
+
+  <canvas id="cropCanvas" style="display: none"></canvas>
+
+  <ng-container *ngIf="mode !== 'view'">
+    <div class="mapdata-indicator">
+      <div class="mapdata-indicator__loading">
+        Getting map data...&nbsp;
+        <div class="spinner-grow spinner-grow-sm" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+
+      <div class="mapdata-indicator__info">
+        info
+      </div>
+    </div>
+
+    <div class="mapdata-selector">
+      <div class="title">
+        UTM
+      </div>
+      <div class="items">
+        <ng-container *ngIf="featureMapDataActive">
+          <h6 class="heading" style="background: url('assets/live/altitude-angel-logo.png') rgba(0, 0, 0, 0.75) no-repeat right;">Data layers</h6>
+          <div class="item checked" data-item="Airspace">Airspace <i class="far fa-check-square"></i><i class="far fa-square"></i></div>
+          <div class="item checked" data-item="Ground Hazards">Ground Hazards <i class="far fa-check-square"></i><i class="far fa-square"></i></div>
+        </ng-container>
+        <ng-container *ngIf="!featureMapDataActive">
+          <div class="subscribe_info">
+            UTM service subscription is not active. Please go to your <a href="/profile/#features">subscriptions</a> and activate.
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="mapdata-context-info">
+      <div class="tag d-flex justify-content-center align-items-center">
+        <i class="fas fa-times"></i>
+      </div>
+      <div class="content"></div>
+    </div>
+  </ng-container>
+
+</div>
+
+<ng-template #missionFormTemplate>
+</ng-template>

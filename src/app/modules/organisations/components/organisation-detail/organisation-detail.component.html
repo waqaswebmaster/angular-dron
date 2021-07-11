@@ -1,0 +1,27 @@
+<div class="organisation-detail-page">
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" class="mb-3"></app-breadcrumb>
+
+  <nb-card *ngIf="organisation">
+    <div class="row p-3">
+      <div class="col-md-4 mb-3">
+        <app-avatar-editor [avatar]="organisation.logo"
+                           (changed)="onLogoChange($event)" (removed)="onLogoRemove()"></app-avatar-editor>
+      </div>
+      <div class="col-md-8 mb-3">
+        <nb-tabset>
+          <nb-tab tabTitle="Profile">
+            <app-organisation-profile-tab [organisation]="organisation"></app-organisation-profile-tab>
+          </nb-tab>
+          <nb-tab tabTitle="Edit">
+            <app-organisation-edit-tab [organisation]="organisation"></app-organisation-edit-tab>
+          </nb-tab>
+          <nb-tab tabTitle="Members">
+            <app-organisation-members-tab [organisation]="organisation"></app-organisation-members-tab>
+          </nb-tab>
+        </nb-tabset>
+      </div>
+    </div>
+  </nb-card>
+
+</div>
+

@@ -1,0 +1,27 @@
+<div class="user-detail-page">
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" class="mb-3"></app-breadcrumb>
+
+  <nb-card *ngIf="user">
+    <div class="row p-3">
+      <div class="col-md-4 mb-3">
+        <app-avatar-editor [avatar]="user.photo_url"
+                           (changed)="onPhotoChange($event)" (removed)="onPhotoRemove()"></app-avatar-editor>
+      </div>
+      <div class="col-md-8 mb-3">
+        <nb-tabset>
+          <nb-tab tabTitle="Profile">
+            <app-user-profile-tab [user]="user"></app-user-profile-tab>
+          </nb-tab>
+          <nb-tab tabTitle="Activity">
+            <app-user-activities-tab [user]="user"></app-user-activities-tab>
+          </nb-tab>
+          <nb-tab tabTitle="Edit">
+            <app-user-edit-tab [user]="user"></app-user-edit-tab>
+          </nb-tab>
+        </nb-tabset>
+      </div>
+    </div>
+  </nb-card>
+
+</div>
+

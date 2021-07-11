@@ -1,0 +1,69 @@
+<div class="logs-page h-100">
+  <div class="page-header d-flex align-items-center justify-content-between mb-3">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <button nbButton status="primary" size="small" routerLink="/logs/upload"><i class="fa fa-plus mr-1"></i> Upload new logs</button>
+  </div>
+
+  <div class="nb-table bg-theme-primary table-sm nowrap shadow">
+    <table mat-table [dataSource]="dataSource" matSort class="w-100" (matSortChange)="onSortChange($event)">
+      <ng-container matColumnDef="datetime_of_start">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Flight Log</th>
+        <td mat-cell *matCellDef="let item">
+          <span class="text-primary cursor-pointer">
+            <span [routerLink]="['/logs', item.uuid]">
+              <ng-container *ngIf="item.datetime_of_start">{{item.datetime_of_start | date: 'yyyy-MM-dd hh:mm:ss'}}</ng-container>
+              <ng-container *ngIf="!item.datetime_of_start">-</ng-container>
+            </span>
+            <i class="fa fa-edit ml-2"></i>
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="duration">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Duration</th>
+        <td mat-cell *matCellDef="let item">{{item.duration_text}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="drone">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Drone</th>
+        <td mat-cell *matCellDef="let item">
+          <div *ngIf="item.drone" class="text-primary cursor-pointer">{{item.drone.name}}</div>
+          <div class="text-secondary text-xs">{{item.drone?.uuid_ap || 'Assign drone manually'}}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="pilot">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Pilot</th>
+        <td mat-cell *matCellDef="let item">
+          <app-user-cell [user]="item.pilot"></app-user-cell>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="hardware_version">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Hardware</th>
+        <td mat-cell *matCellDef="let item">{{item.hardware_version}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="software_version">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Software</th>
+        <td mat-cell *matCellDef="let item">{{item.software_version}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="rating">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Rating</th>
+        <td mat-cell *matCellDef="let item">{{item.rating_text}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="operation_type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+        <td mat-cell *matCellDef="let item">{{item.operation_type_text}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <app-paginator [(page)]="page" [pageSize]="10" [length]="totalCount" (pageChange)="loadTableData()"></app-paginator>
+  </div>
+</div>
+

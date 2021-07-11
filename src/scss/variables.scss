@@ -1,0 +1,28 @@
+@import "../../node_modules/breakpoint-sass/stylesheets/_breakpoint";
+
+$primary: #007BFF;
+$warning: #ffaa00;
+$warning-light: #fdf3cd;
+$warning-dark: #b86e00;
+$danger: #ff3d71;
+$danger-dark: #b81d5b;
+
+$theme-light-primary: #fff;
+$theme-light-secondary: #edf1f7;
+$theme-light-thirdly: #e4e9f2;
+$theme-light-input: #f7f9fc;
+
+$theme-dark-primary: #222b45;
+$theme-dark-secondary: #192038;
+$theme-dark-thirdly: #101426;
+$theme-dark-title: #8f9bb3;
+$theme-dark-input: #192038;
+
+$font-primary: Open Sans, sans-serif;
+
+$xl: (width 1680px 0);
+$lg: (width 1199px 0);
+$md: (width 991px 0);
+$sm: (width 767px 0);
+$xs: (width 576px 0);
+$xxs: (width 450px 0);

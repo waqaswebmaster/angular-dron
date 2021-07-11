@@ -1,0 +1,227 @@
+<div class="log-detail-page" *ngIf="log">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <div>
+      <button nbButton status="success" size="small" class="mr-2">Edit</button>
+      <button nbButton status="primary" size="small">Download</button>
+    </div>
+  </div>
+
+  <nb-card>
+    <nb-card-body>
+      <table class="nb-table table-sm w-100">
+        <tbody>
+        <tr>
+          <th class="nowrap">Description</th>
+          <td>{{log.description || '-'}}</td>
+        </tr>
+        <tr>
+          <th class="nowrap">Special notes</th>
+          <td>{{log.special_notes || '-'}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </nb-card-body>
+  </nb-card>
+
+  <div class="row">
+    <div class="col-md-4">
+      <nb-card>
+        <nb-card-header>General</nb-card-header>
+        <nb-card-body>
+          <table class="nb-table table-sm w-100">
+            <tbody>
+            <tr>
+              <th>Pilot</th>
+              <td>
+                <app-user-cell [user]="log.pilot"></app-user-cell>
+              </td>
+            </tr>
+            <tr>
+              <th>Flight type</th>
+              <td>{{log.flight_type_text}}</td>
+            </tr>
+            <tr>
+              <th>Operation type</th>
+              <td>{{log.operation_type_text}}</td>
+            </tr>
+            <tr>
+              <th>Rating</th>
+              <td>{{log.rating_text}}</td>
+            </tr>
+            <tr>
+              <th>Wind speed</th>
+              <td>{{log.wind_speed_text}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-md-4">
+      <nb-card>
+        <nb-card-header>Flight controller</nb-card-header>
+        <nb-card-body>
+          <table class="nb-table table-sm w-100">
+            <tbody>
+            <tr>
+              <th>Hardware</th>
+              <td>{{log.hardware_name || '-'}}</td>
+            </tr>
+            <tr>
+              <th>Software version</th>
+              <td>{{log.software_version || '-'}}</td>
+            </tr>
+            <tr>
+              <th>OS version</th>
+              <td>{{log.os_version || '-'}}</td>
+            </tr>
+            <tr>
+              <th>Estimator</th>
+              <td>{{log.estimator || '-'}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-header>Log info</nb-card-header>
+        <nb-card-body>
+          <table class="nb-table table-sm w-100">
+            <tbody>
+            <tr>
+              <th>Logging start</th>
+              <td>{{(log.datetime_of_start | date: 'yyyy-MM-dd HH:mm:ss') || '-' }}</td>
+            </tr>
+            <tr>
+              <th>Logging duration</th>
+              <td>{{log.duration_text}}</td>
+            </tr>
+            <tr>
+              <th>Dropouts</th>
+              <td>{{log.dropouts || '-'}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-md-4">
+      <nb-card>
+        <nb-card-header>Summary</nb-card-header>
+        <nb-card-body>
+          <table class="nb-table table-sm w-100">
+            <tbody>
+            <tr>
+              <th>Ground altitude</th>
+              <td>{{formatDistance(log.ground_altitude)}}</td>
+            </tr>
+            <tr>
+              <th>Max distance from home</th>
+              <td>{{formatDistance(log.max_distance_from_home)}}</td>
+            </tr>
+            <tr>
+              <th>Travelled distance</th>
+              <td>{{formatDistance(log.travelled_distance)}}</td>
+            </tr>
+            <tr>
+              <th>Max altitude difference</th>
+              <td>{{formatDistance(log.max_alt_diff)}}</td>
+            </tr>
+            <tr>
+              <th>Average speed</th>
+              <td [innerHTML]="formatSpeed(log.average_speed)"></td>
+            </tr>
+            <tr>
+              <th>Max speed</th>
+              <td [innerHTML]="formatSpeed(log.max_speed)"></td>
+            </tr>
+            <tr>
+              <th>Max speed horizontal</th>
+              <td [innerHTML]="formatSpeed(log.max_speed_h)"></td>
+            </tr>
+            <tr>
+              <th>Max speed up</th>
+              <td [innerHTML]="formatSpeed(log.max_speed_up)"></td>
+            </tr>
+            <tr>
+              <th>Max speed down</th>
+              <td [innerHTML]="formatSpeed(log.max_speed_down)"></td>
+            </tr>
+            <tr>
+              <th>Battery voltage, V (begin / end)</th>
+              <td>{{(log.battery_voltage_begin | number: '0.2-2') || '-'}} / {{(log.battery_voltage_end | number: '0.2-2') || '-'}} V</td>
+            </tr>
+            <tr>
+              <th>Battery current avg / max</th>
+              <td>{{(log.battery_average_current | number: '0.2-2') || '-'}} / {{(log.battery_max_current | number: '0.2-2') || '-'}} A</td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <app-bokeh-chart title="Altitude Estimate"></app-bokeh-chart>
+
+  <app-chart-card *ngFor="let chart of charts"
+                  [title]="chart.title" [chart]="chart"></app-chart-card>
+
+  <nb-card>
+    <nb-card-header>
+      Non-default Parameters <span class="font-weight-normal">(except RC and sensor calibration)</span>
+    </nb-card-header>
+    <nb-card-body>
+      <table class="nb-table table-sm table-striped w-100">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Value</th>
+          <th>Default</th>
+          <th>Min</th>
+          <th>Max</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let row of nonDefaultParameters">
+          <td>{{row.id}}</td>
+          <td>{{row.name}}</td>
+          <td>{{row.value}}</td>
+          <td>{{row.default}}</td>
+          <td>{{row.min}}</td>
+          <td>{{row.max}}</td>
+          <td>{{row.description}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </nb-card-body>
+  </nb-card>
+
+  <nb-card>
+    <nb-card-header>Logged Messages</nb-card-header>
+    <nb-card-body>
+      <table class="nb-table table-sm table-striped w-100">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Time</th>
+          <th>Level</th>
+          <th>Message</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let row of loggedMessages">
+          <td>{{row.id}}</td>
+          <td>{{row.time}}</td>
+          <td>{{row.level}}</td>
+          <td>{{row.message}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </nb-card-body>
+  </nb-card>
+</div>
+

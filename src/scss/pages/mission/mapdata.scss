@@ -1,0 +1,199 @@
+.mapdata-indicator {
+  position: absolute;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+
+  &__loading, &__info {
+    display: none;
+    padding: 8px;
+  }
+}
+
+.mapdata-selector {
+  position: absolute;
+  top: 7px;
+  left: 5px;
+  cursor: pointer;
+
+  .heading {
+    margin: 0px;
+    padding: 5px 0 5px 10px;
+    background-size: 120px !important;
+  }
+
+  .title, .items {
+    border-radius: 3px;
+    color: white;
+  }
+
+  .title {
+    display: inline-block;
+    padding: 4px 8px;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  .items {
+    margin-top: 8px;
+    overflow: hidden;
+    display: none;
+  }
+
+  .item {
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 4px 8px;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    user-select: none;
+    width: 280px;
+
+    i {
+      margin-left: 8px;
+      display: none;
+    }
+
+    &.checked i.fa-check-square {
+      display: block;
+    }
+
+    &:not(.checked) i.fa-square {
+      display: block;
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+  }
+
+  .flight-plan-items .item {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .subscribe_info {
+    width: 280px;
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 10px 8px;
+
+    &.bottom {
+      padding-bottom: 8px;
+    }
+  }
+
+  &:hover .items {
+    display: block;
+  }
+}
+
+.mapdata-context-info {
+  display: none;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  width: 320px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+
+  .tag {
+    position: absolute;
+    top: 40px;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    border-bottom-right-radius: 8px;
+    border-top-right-radius: 8px;
+    width: 40px;
+    height: 40px;
+    right: -40px;
+    cursor: pointer;
+    transition: background-color;
+
+    &:hover {
+      background-color: rgba(40, 40, 40, 0.75);
+    }
+  }
+
+  .content {
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+    padding: 8px 12px;
+
+    .top {
+      .color {
+        width: 19px;
+        height: 19px;
+        border: 1px black solid;
+        vertical-align: sub;
+        margin-right: 4px;
+        display: inline-block;
+      }
+
+      .title {
+        text-transform: uppercase;
+        margin-left: 8px;
+        text-decoration: underline;
+        font-size: 18px;
+        display: inline;
+      }
+
+      margin-bottom: 8px;
+    }
+
+    .item {
+      margin-bottom: 8px;
+
+      .title {
+        margin-bottom: 2px;
+      }
+
+      .info {
+        font-size: 12px;
+      }
+    }
+
+    .flight-plan input, texarea {
+      height: 21px;
+      font-size: 14px;
+
+      background-color: transparent;
+      border: none;
+      color: white;
+      outline: none;
+      padding: 0;
+
+      border-bottom: 1px solid grey;
+
+      &:disabled {
+        opacity: 0.7;
+      }
+    }
+
+    .flight-plan .slider .custom-handle {
+      background-color: #007fff;
+      color: white;
+      width: 4em;
+      height: 1.2em;
+      top: 50%;
+      margin-top: -0.6em;
+      text-align: center;
+      line-height: 1.3em;
+      outline: none;
+    }
+
+    .flight-plan .flight-plan-content {
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .flight-plan .flight-errors-row {
+      color: red;
+    }
+  }
+}

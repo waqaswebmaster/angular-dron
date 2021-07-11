@@ -1,0 +1,18 @@
+<div class="avatar-editor text-center">
+  <div *ngIf="avatar" class="avatar mb-3"
+       [style.background-image]="'url(' + avatar + ')'">
+  </div>
+
+  <i *ngIf="!avatar" class="fa fa-user-circle fa-8x d-block mb-3"></i>
+
+  <ngx-dropzone #dropzone accept="image/*" [hidden]="true" [multiple]="false"
+                (change)="onUpload($event)"></ngx-dropzone>
+
+  <div class="d-flex align-items-center justify-content-center flex-wrap">
+    <button nbButton [outline]="true" status="primary" size="small" class="m-2"
+            (click)="dropzone.showFileSelector()">Upload photo</button>
+    <button *ngIf="avatar" nbButton [outline]="true" status="danger" size="small" class="m-2"
+            (click)="onRemove()">Delete photo</button>
+  </div>
+</div>
+

@@ -1,0 +1,92 @@
+<div class="log-upload-page">
+  <div class="page-header mb-3">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+  </div>
+
+  <nb-card>
+    <nb-card-body>
+      <form class="form-horizontal mt-3" [formGroup]="form">
+        <div class="form-inline">
+          <label class="label col-sm-3">Service name</label>
+          <div class="col-sm-9">
+            <input fullWidth nbInput formControlName="service_name"
+                   [status]="isFieldInvalid(f.service_name) ? 'danger' : 'basic'" shape="rectangle">
+            <p class="input-hint text-secondary">Service name is unique and used for search active services for user</p>
+            <div *ngIf="isFieldInvalid(f.service_name)" class="invalid-feedback d-block">
+              <div *ngIf="f.service_name.errors.required">Service name is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-inline">
+          <label class="label col-sm-3">Name</label>
+          <div class="col-sm-9">
+            <input fullWidth nbInput formControlName="name"
+                   [status]="isFieldInvalid(f.name) ? 'danger' : 'basic'" shape="rectangle">
+            <p class="input-hint text-secondary">Display name is unique and show for users</p>
+            <div *ngIf="isFieldInvalid(f.name)" class="invalid-feedback d-block">
+              <div *ngIf="f.name.errors.required">Name is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-inline">
+          <label class="label col-sm-3">Description</label>
+          <div class="col-sm-9">
+            <textarea fullWidth nbInput formControlName="description" [rows]="5"
+                   [status]="isFieldInvalid(f.description) ? 'danger' : 'basic'" shape="rectangle">
+            </textarea>
+            <p class="input-hint text-secondary">Service description</p>
+            <div *ngIf="isFieldInvalid(f.description)" class="invalid-feedback d-block">
+              <div *ngIf="f.description.errors.required">Description is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-inline">
+          <label class="label col-sm-3">Trial period (in Hours)</label>
+          <div class="col-sm-9">
+            <input fullWidth nbInput formControlName="trial_period" type="number"
+                   [status]="isFieldInvalid(f.trial_period) ? 'danger' : 'basic'" shape="rectangle">
+            <p class="input-hint text-secondary">Trial period in hours: one day is 24, seven days is 168, thirty days is 720. If service without trial set 0</p>
+            <div *ngIf="isFieldInvalid(f.trial_period)" class="invalid-feedback d-block">
+              <div *ngIf="f.trial_period.errors.required">Trial period is required</div>
+              <div *ngIf="f.trial_period.errors.min">Trial period should be positive integer</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-inline">
+          <label class="label col-sm-3">Monthly fee (in Cents)</label>
+          <div class="col-sm-9">
+            <input fullWidth nbInput formControlName="monthly_fee" type="number"
+                   [status]="isFieldInvalid(f.monthly_fee) ? 'danger' : 'basic'" shape="rectangle">
+            <p class="input-hint text-secondary">Value in cents: one dollar is 100</p>
+            <div *ngIf="isFieldInvalid(f.monthly_fee)" class="invalid-feedback d-block">
+              <div *ngIf="f.monthly_fee.errors.required">Monthly fee is required</div>
+              <div *ngIf="f.monthly_fee.errors.min">Monthly fee should be positive integer</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-inline">
+          <label class="label col-sm-3">Yearly fee (in Cents)</label>
+          <div class="col-sm-9">
+            <input fullWidth nbInput formControlName="yearly_fee" type="number"
+                   [status]="isFieldInvalid(f.yearly_fee) ? 'danger' : 'basic'" shape="rectangle">
+            <p class="input-hint text-secondary">Value in cents: one dollar is 100, usually equal 10 month fee</p>
+            <div *ngIf="isFieldInvalid(f.yearly_fee)" class="invalid-feedback d-block">
+              <div *ngIf="f.yearly_fee.errors.required">Yearly fee is required</div>
+              <div *ngIf="f.yearly_fee.errors.min">Yearly fee should be positive integer</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-right">
+          <button nbButton shape="rectangle" status="primary" size="small" (click)="onSave()">Submit</button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
+</div>
+

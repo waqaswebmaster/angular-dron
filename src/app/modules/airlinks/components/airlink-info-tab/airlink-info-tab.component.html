@@ -1,0 +1,41 @@
+<div class="airlink-info-tab py-2">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="info d-flex">
+        <span>Mission Cumputer UUID:</span>&nbsp;
+        <b>{{airLink.uuid_link || 'NONE'}}</b>
+      </div>
+      <div class="info d-flex">
+        <span>Autopilot UUID:</span>&nbsp;
+        <b>{{airLink.uuid_ap || 'NONE'}}</b>
+      </div>
+      <div class="info d-flex">
+        <span>IP Address:</span>&nbsp;
+        <b>{{airLink.ip_address || 'NONE'}}</b>
+      </div>
+      <div class="info d-flex">
+        <span>Port:</span>&nbsp;
+        <b>{{airLink.port || 'NONE'}}</b>
+      </div>
+      <div class="info d-flex">
+        <span>Software:</span>&nbsp;
+        <b>{{airLink.software || 'NONE'}}</b>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="info d-flex">
+        <span>Owner:</span>&nbsp;
+        <b *ngIf="airLink.owner" class="text-primary cursor-pointer" [routerLink]="['/users', airLink.owner.id]">{{airLink.owner.full_name}}</b>
+      </div>
+      <div class="info d-flex">
+        <span>Users:</span>
+        <span *ngFor="let user of airLink.users; let i = index">
+          {{ i> 0 ? ',' : '' }}&nbsp;
+          <b class="text-primary cursor-pointer" [routerLink]="['/users', user.id]">{{user.full_name}}</b>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+

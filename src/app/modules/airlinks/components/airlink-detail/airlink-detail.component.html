@@ -1,0 +1,25 @@
+<div class="airlink-detail-page">
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" class="mb-3"></app-breadcrumb>
+
+  <nb-card *ngIf="airLink">
+    <nb-tabset class="px-3">
+      <nb-tab tabTitle="Info">
+        <app-airlink-info-tab [airLink]="airLink"></app-airlink-info-tab>
+      </nb-tab>
+      <nb-tab tabTitle="Edit">
+        <app-airlink-edit-tab [airLink]="airLink"></app-airlink-edit-tab>
+      </nb-tab>
+      <nb-tab tabTitle="Access">
+        <app-airlink-access-tab [airLink]="airLink"></app-airlink-access-tab>
+      </nb-tab>
+      <nb-tab tabTitle="Sessions">
+        <app-airlink-sessions-tab [airLink]="airLink"></app-airlink-sessions-tab>
+      </nb-tab>
+      <nb-tab tabTitle="Owners">
+        <app-airlink-owners-tab [airLink]="airLink"></app-airlink-owners-tab>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card>
+
+</div>
+
